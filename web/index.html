@@ -6,11 +6,45 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>FoodNotes ~ Main Page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.css">
+        <link rel="stylesheet" href="/bower_components/foodNotes/main.css">
     </head>
-    <body>
-        <div>TODO write content</div>
+    <body role="document">
+
+    <div class="container space">
+       <div class="row">
+          <div class="col-sm-8">
+
+             <div class="jumbotron">
+                <h1>FoodNotes </h1>
+                <p>
+                  Think your alergic to something? Track what you eat with FoodNotes and find out!
+                </p>
+             </div>
+          </div>
+          <div class="col-sm-4">
+             <div class="well">
+                <form action="/SignIn" method="POST">
+                   <div class="form-group">
+                      <label for="username">Username </label>
+                      <input type="email" class="form-control" id="username" placeholder="Username">
+                   </div>
+                   <div class="form-group">
+                      <label for="Password">Password</label>
+                      <input type="password" class="form-control" id="Password" placeholder="Password">
+                   </div>
+                   <p class="text-right">
+                   <a href="/SignUp" class="btn btn-default">Sign up</a>
+                   <input type="submit" class="btn btn-primary" value="Sign In &rarr;">
+                   </p>
+                </form>
+             </div>
+          </div>
+       </div>
+    </div>
     </body>
 </html>
