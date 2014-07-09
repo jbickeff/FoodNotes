@@ -6,11 +6,7 @@
       "name" : "Breakfast",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
-         "Cheetos",
-         "Hot Dogs",
-         "Car Tires"
-         ],
+      "food" : [],
       "symptoms" : [
          "Stomach ache"
          ]
