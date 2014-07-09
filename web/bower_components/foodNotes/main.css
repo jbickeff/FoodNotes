@@ -5,3 +5,10 @@
 .space {
    margin: 100px auto;
 }
+.little-space {
+   margin: 1em;
+}
+
+.fixed-height {
+   height: 10em;
+}
