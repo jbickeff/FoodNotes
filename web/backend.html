@@ -25,17 +25,18 @@ and open the template in the editor.
    <h1> FoodNotes </h1>
    <div ng-controller="HistoryController as history" class="row">
       <div class="col-lg-12">
-         <button class="btn btn-default" ng-click="history.newest()" >Newest</button>
-         <div class="btn-group pull-right">
+         <div class="little-space btn-group pull-right">
             <button class="btn btn-default" ng-click="history.prev()" >Previous</button>
             <button class="btn btn-default .visible-md .visible-lg" ng-click="history.next()" >Next</button>
          </div>
+         <button class="little-space btn btn-default pull-right" ng-click="history.newest()" >Newest</button>
       </div>
 
       <div ng-repeat="day in history.getHist()" class="col-md-4">
-         <h2>
+         <h2 class="page-header">
             {{ day.date | date : 'EEEE' }}
-            <small>{{ day.date | date : 'MMM, d' }}</small>
+            <small>{{ day.date | date : 'MMM, d y' }}</small>
+            <a class="btn btn-default pull-right" href="#">Add</a>
          </h2>
          <div class="panel panel-default" ng-repeat="entry in day.entries">
                <div class="panel-heading">
