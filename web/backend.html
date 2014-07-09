@@ -37,14 +37,29 @@ and open the template in the editor.
             {{ day.date | date : 'EEEE' }}
             <small>{{ day.date | date : 'MMM, d' }}</small>
          </h2>
-         <div class="fixed-height panel panel-default" ng-repeat="entry in day.entries">
+         <div class="panel panel-default" ng-repeat="entry in day.entries">
                <div class="panel-heading">
                   <strong>{{ entry.name }}</strong> <small>{{ entry.time }}</small>
                <a class="btn btn-default btn-sm pull-right" href="#Edit"><i class="glyphicon glyphicon-pencil"></i></a>
                <div class="clearfix"></div>
                </div>
             <div class="panel-body">
+
                <p>{{ entry.description }}</p>
+
+               Food Items:
+               <ul>
+                  <li ng-repeat="food in entry.food">
+                  {{ food }}
+                  </li>
+               </ul>
+
+               Symptoms:
+               <ul>
+                  <li ng-repeat="symptom in entry.symptoms">
+                  {{ symptom }}
+                  </li>
+               </ul>
             </div>
          </div>
       </div>

@@ -14,3 +14,6 @@ nb-configuration.xml
 *.jar
 *.war
 *.ear
+
+*.swp
+*.swo
