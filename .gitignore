@@ -4,6 +4,8 @@ build/
 nbbuild/
 dist/
 nbdist/
+web/bower_components/bootstrap/
+!web/bower_components/bootstrap/dist/
 nbactions.xml
 nb-configuration.xml
 
