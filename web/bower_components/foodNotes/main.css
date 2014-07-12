@@ -5,10 +5,43 @@
 .space {
    margin: 100px auto;
 }
+
+.inner-space {
+   padding: 3em;
+}
+
 .little-space {
    margin: 1em;
 }
 
 .fixed-height {
    height: 10em;
+}
+
+.over-page {
+    overflow: hidden;
+    position: fixed;
+    top:0px;
+    left:100%;
+    /* padding:50px 50px 100px 50px; */
+    padding:0;
+    height:120%;
+    width:100%;
+    background-color:#EEE;
+    border-right:2px solid #BBB;
+    display:block;
+    z-index:1;
+
+    /* easeOutQuint */
+    -webkit-transition: all 400ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+    -moz-transition: all 400ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+    -o-transition: all 400ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+    transition: all 400ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+    -webkit-backface-visibility: hidden;
+    -webkit-transform-style: preserve-3d;
+}
+
+
+.page-add .over-page {
+    left:0%;
 }
