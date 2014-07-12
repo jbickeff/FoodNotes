@@ -6,7 +6,7 @@
       "name" : "Breakfast",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [],
+      "ingredients" : [],
       "symptoms" : [
          "Stomach ache"
          ]
@@ -15,7 +15,7 @@
       "name" : "Dinner",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos",
          "Hot Dogs",
          "Car Tires"
@@ -33,7 +33,7 @@
       "name" : "Breakfast",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos",
          "Hot Dogs",
          "Car Tires"
@@ -46,7 +46,7 @@
       "name" : "Dinner",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos",
          "Hot Dogs",
          "Car Tires"
@@ -64,7 +64,7 @@
       "name" : "Breakfast",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos",
          "Hot Dogs",
          "Car Tires"
@@ -77,7 +77,7 @@
       "name" : "Snack",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos"
          ],
       "symptoms" : [
@@ -88,7 +88,7 @@
       "name" : "Snack",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos"
          ],
       "symptoms" : [
@@ -99,7 +99,7 @@
       "name" : "Snack",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos"
          ],
       "symptoms" : [
@@ -110,7 +110,7 @@
       "name" : "Dinner",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos",
          "Hot Dogs",
          "Car Tires"
@@ -128,7 +128,7 @@
       "name" : "Breakfast",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos",
          "Hot Dogs",
          "Car Tires"
@@ -141,7 +141,7 @@
       "name" : "Snack",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos"
          ],
       "symptoms" : [
@@ -152,7 +152,7 @@
       "name" : "Dinner",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos",
          "Hot Dogs",
          "Car Tires"
@@ -170,7 +170,7 @@
       "name" : "Breakfast",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos",
          "Hot Dogs",
          "Car Tires"
@@ -183,7 +183,7 @@
       "name" : "Snack",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos"
          ],
       "symptoms" : [
@@ -194,7 +194,7 @@
       "name" : "Dinner",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos",
          "Hot Dogs",
          "Car Tires"
@@ -212,7 +212,7 @@
       "name" : "Breakfast",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos",
          "Hot Dogs",
          "Car Tires"
@@ -225,7 +225,7 @@
       "name" : "Snack",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos"
          ],
       "symptoms" : [
@@ -236,7 +236,7 @@
       "name" : "Dinner",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos",
          "Hot Dogs",
          "Car Tires"
@@ -254,7 +254,7 @@
       "name" : "Snack",
       "time" : "10:30 AM",
       "description" : "It was a good day.",
-      "food" : [
+      "ingredients" : [
          "Cheetos",
          "Hot Dogs",
          "Car Tires"
