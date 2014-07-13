@@ -19,13 +19,13 @@
 }
 
 .over-page {
-    overflow: hidden;
+    overflow: scroll;
     position: fixed;
     top:0px;
     left:100%;
     /* padding:50px 50px 100px 50px; */
     padding:0;
-    height:120%;
+    height:100%;
     width:100%;
     background-color:#EEE;
     border-right:2px solid #BBB;
@@ -40,7 +40,6 @@
     -webkit-backface-visibility: hidden;
     -webkit-transform-style: preserve-3d;
 }
-
 
 .page-add .over-page {
     left:0%;
