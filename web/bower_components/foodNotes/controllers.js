@@ -2,42 +2,63 @@
    "use strict";
    var fc = angular.module('foodControllers', []);
 
-   fc.controller('PageController', function ($scope) {
-      var url = 'main';
+   fc.controller('PageController', function ($scope, $location) {
+      $scope.pageUrl = $location.path();
+      $scope.location = $location;
+
+      this.changePage = function(newUrl) {
+         $scope.pageUrl = newUrl;
+         window.location.hash = newUrl;
+      }
 
       this.addPage = function () {
-         url = 'page-add';
-         console.log(url);
+         this.changePage('/page-add');
       }
 
       this.mainPage = function () {
-         url = 'main';
-         console.log(url);
+         this.changePage('/main');
       }
 
       this.getURL = function () {
-         return url;
+         return $scope.pageUrl.slice(1);
       }
+
+      $scope.$watch('location.path()', function () {
+         $scope.pageUrl = $location.path();
+      });
 
    });
 
+   /**
+    * AddingController
+    * this is in charge of the interface for adding new
+    * logs
+    */
    fc.controller('AddingController', function($scope, $http) {
 
-      this.title = 'Snack';
-      this.desc = '';
-      this.ingredients = [''];
-      this.symptoms = [''];
+      $scope.log = {
+         title : 'Snack',
+         desc : '',
+         ingredients : [''],
+         symptoms : ['']
+      }
 
+      // ingredient stuff
       this.addIngredient = function () {
-         this.ingredients.push('');
+         $scope.log.ingredients.push('');
       };
 
       this.removeIngredient = function (index) {
-         this.ingredients.splice(index, 1);
+         $scope.log.ingredients.splice(index, 1);
+      };
+      
+      // symptoms stuff
+      this.addSymptom = function () {
+         $scope.log.symptoms.push('');
       };
 
-      this.addSymptom = function () {
-         this.Symptoms.push('');
+      this.removeSymptom = function (index) {
+         $scope.log.symptoms.splice(index, 1);
       };
 
    });
