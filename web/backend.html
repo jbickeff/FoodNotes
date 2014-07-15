@@ -43,25 +43,40 @@ and open the template in the editor.
                </div>
 
                <div class="">
-                  <div class="form-inline" ng-repeat="ing in log.ingredients track by $index">
-                     <input ng-model="log.ingredients[$index]" type="text" class="form-control" id="titleInput" placeholder="Enter an Ingredient">
-                     <button class="btn btn-danger" ng-click="adder.removeIngredient($index)">X</button>
+                  <div ng-repeat="ing in log.ingredients track by $index">
+                     <div class="little-space form-inline">
+                        <input ng-model="ing.name" type="text" class="form-control" id="titleInput" placeholder="Enter an Ingredient">
+                        <button class="btn btn-danger" ng-click="adder.removeIngredient($index)"><i class="glyphicon glyphicon-remove"></i></button>
+                        <button class="btn btn-default" ng-click=""><i class="glyphicon glyphicon-search"></i></button>
+                     </div>
+
+                     <div class="list-group" ng-show="ing.name.length > 0 && log.suj.indexOf(ing.name) == -1">
+                        <a ng-repeat="suj in log.suj | filter:ing.name" href=""  class="list-group-item" ng-click="$parent.ing.name = suj">
+                           {{ suj }}
+                        </a>
+                     </div>
+
                   </div>
+
                   <button class="little-space btn btn-primary" ng-click="adder.addIngredient()">Add Ingredient</button>
                </div>
 
-               <div class="">
-                  <div class="form-inline" ng-repeat="ing in log.symptoms track by $index">
-                     <input ng-model="log.symptoms[$index]" type="text" class="form-control" id="titleInput" placeholder="Enter a Symptom">
-                     <button class="btn btn-danger" ng-click="adder.removeSymptom($index)">X</button>
+               <div class="" ng-repeat="sym in log.symptoms track by $index">
+                  <div class="form-inline">
+                     <input ng-model="sym.name" type="text" class="form-control" id="titleInput" placeholder="Enter a Symptom">
+                     <button class="btn btn-danger" ng-click="adder.removeSymptom($index)"><i class="glyphicon glyphicon-remove"></i></button>
                   </div>
-                  <button class="little-space btn btn-primary" ng-click="adder.addSymptom()">Add Symptom</button>
+
+                  <div class="list-group" ng-show="sym.name.length > 0 && log.symSuj.indexOf(sym.name) == -1">
+                     <a ng-repeat="suj in log.symSuj | filter:sym.name" href=""  class="list-group-item" ng-click="$parent.sym.name = suj">
+                        {{ suj }}
+                     </a>
+                  </div>
+
+
                </div>
 
-               {{ log }}
-
-            
-
+               <button class="little-space btn btn-primary" ng-click="adder.addSymptom()">Add Symptom</button>
             </form>
 
 

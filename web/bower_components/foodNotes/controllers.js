@@ -39,22 +39,40 @@
       $scope.log = {
          title : 'Snack',
          desc : '',
-         ingredients : [''],
-         symptoms : ['']
+         ingredients : [{name:''}],
+         suj : [
+            'cheetos white',
+            'hot cheetos',
+            'hotdogs'
+         ],
+         symptoms : [{name:'asdf'}],
+         symSuj : [
+            'headache',
+            'stomach ache',
+            'hives',
+            'sneezeing',
+            'swelling',
+            'hyperactivity'
+         ]
       }
 
       // ingredient stuff
       this.addIngredient = function () {
-         $scope.log.ingredients.push('');
+         $scope.log.ingredients.push({name:''});
       };
 
       this.removeIngredient = function (index) {
          $scope.log.ingredients.splice(index, 1);
       };
+
+      this.selectIng = function (index, suj) {
+         $scope.log.ingredients[index].name = suj;
+         console.log('hello');
+      }
       
       // symptoms stuff
       this.addSymptom = function () {
-         $scope.log.symptoms.push('');
+         $scope.log.symptoms.push({name:''});
       };
 
       this.removeSymptom = function (index) {
