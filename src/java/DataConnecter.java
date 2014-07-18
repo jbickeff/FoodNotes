@@ -18,10 +18,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.MalformedURLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.codehaus.jackson.map.JsonMappingException;
+//import org.codehaus.jackson.;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
+
 
 /**
  *
@@ -30,8 +35,8 @@ import java.util.logging.Logger;
 
 public class DataConnecter {
     //This should be changed before we push this into usable locations
-    private String apID = "appId=1432414160367156";
-    private String apKey = "appKey=11726299147806c7c66873a7d25bd55b";
+    private String apID = "appId=8de0c306";
+    private String apKey = "appKey=a3f1f94cec025bf74360f05b50fd6cb8";
     private String connUrl = "http://www.klappo.com:8080/jesse/server/"
     +"suitability_inspection/";
     private List<FoodInfo> infoFoods; 
@@ -44,41 +49,47 @@ public class DataConnecter {
     {
     }
 
-    public Map<String, Object> requestBarCode(String name)
+    public List<BarcodeConnection> requestBarCode(String name)
     {
         URL url;
-        try {
-            url = new URL(connUrl+"getProductFromIngredientName?"+apID+apKey+"="+name);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(DataConnecter.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> options = mapper.readValue(url, Map.class); 
-        
-        for(String k : options.keySet())
-        {
-            System.out.println(k + "\n");
+        List<BarcodeConnection> options;
+        try {
+            url = new URL(connUrl+"getProductsFromIngredientName?"+apID+"&"+apKey+"&name="+name);
+            System.out.println(url);
+            options = mapper.readValue(url, new TypeReference<List<BarcodeConnection>>(){});
+            System.out.println("Spot 2");
+        } catch (Exception ex) {
+            System.out.println("Exception throwen = "+ ex);
+            options = null;
         }
+       System.out.println("Spot3");
+      
         return options;
     }
     
-    public Map<String, Object> requestInfo(String barCode)
+    
+    public List<FoodInfo> requestInfo(String barCode)
     {
+        ObjectMapper mapper = new ObjectMapper();
+        List<FoodInfo> result = null;
         URL url;
         try {
-            url = new URL(connUrl+"getProductInfo?"+apID+apKey+"="+barCode);
-        } catch (MalformedURLException ex) {
+            url = new URL(connUrl+"getProductInfo?"+apID+"&"+apKey+"&barcode="+barCode);
+            
+            result = mapper.readValue(url, new TypeReference<List<FoodInfo>>(){}); 
+        
+             return result;
+        } 
+        catch (MalformedURLException ex) {
+            Logger.getLogger(DataConnecter.class.getName()).log(Level.SEVERE, null, ex);
+            result = null;
+        } catch (IOException ex) {
             Logger.getLogger(DataConnecter.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> result = mapper.readValue(url, Map.class); 
-        
-        for(String k : result.keySet())
-        {
-            System.out.println(k + "\n");
-        }
+               
         return result;
     }
+
+    
 }
