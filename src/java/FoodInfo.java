@@ -1,3 +1,6 @@
+
+import java.util.List;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -63,4 +66,41 @@ public class FoodInfo
     public void setUpc(String upc) {
         this.upc = upc;
     }  
+}
+
+class restriction
+{
+    private String name;
+    private String description;
+    private List<String> ingredients;
+
+    public restriction(String name, String description, List<String> ingredients) {
+        this.name = name;
+        this.description = description;
+        this.ingredients = ingredients;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<String> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<String> ingredients) {
+        this.ingredients = ingredients;
+    }    
 }
