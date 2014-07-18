@@ -14,12 +14,25 @@ class JavaDataBasev0 {
    static String userId = "2";
    static List<Entry> theEntries = new ArrayList();
    static User theUser;
+   static private DB theDataBase;
+   
 
    public static void main(String[] args) {
       Connection conn = null;
       Statement stmt = null;
-
+      theDataBase = new DB();
+      
       theUser = new User("Makz", "pass");
+      
+      List<String> itestString = new ArrayList();
+      itestString.add("testing ingredient");
+
+      List<String> stestString2 = new ArrayList();
+      stestString2.add("test problem");
+      
+      theDataBase.addUser("Jeff", "ponies");
+      //theUser.addEntry(itestString, stestString2, 
+      //        "2014-09-15 05:30:00", "test comment");
       outputEntries();
    }
 
@@ -42,5 +55,10 @@ class JavaDataBasev0 {
             System.out.println("     " + s.getName());
          }
       }
+      
+      System.out.println();
+      System.out.println();
+      System.out.println();
+      System.out.println();
    }
 }

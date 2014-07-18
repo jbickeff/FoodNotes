@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package javadatabasev0;
 
 import java.sql.Connection;
@@ -9,16 +5,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import static javadatabasev0.JavaDataBasev0.DB_URL;
+import java.util.Locale;
 
-/**
- *
- * @author Makz
- */
 public class User {
 
+   DB theDataBase;
    private List<Entry> theEntries;
    String userId;
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -28,67 +23,30 @@ public class User {
    static final String PASS = "";
 
    User(String pUserName, String pUserPass) {
-      //TODO fix this so it can be other users.
-      userId = "2";
+      theDataBase = new DB();
+      theEntries = new ArrayList();
+
+      userId = theDataBase.getUserId(pUserName, pUserPass);
+
       createEntryList();
    }
 
    void createEntryList() {
-      Statement stmt = null;
-      Connection conn = null;
-
-      theEntries = new ArrayList();
-      
-      try {
-         Class.forName("com.mysql.jdbc.Driver");
-         conn = DriverManager.getConnection(DB_URL, USER, PASS);
-         stmt = conn.createStatement();
-         String sql;
-         sql = "SELECT id, date, userId, comments FROM entries WHERE userId=" + userId;
-         ResultSet rs = stmt.executeQuery(sql);
-         while (rs.next()) {
-            String id = rs.getString("id");
-            String date = rs.getString("date");
-            String userId = rs.getString("userId");
-            String comments = rs.getString("comments");
-
-            Entry temp = new Entry(id, userId, date, comments);
-            getTheEntries().add(temp);
-         }
-         rs.close();
-         stmt.close();
-         conn.close();
-      } catch (Exception e) {
-         System.out.println(e);
-
-      } finally {
-         try {
-            if (stmt != null) {
-               stmt.close();
-            }
-         } catch (SQLException se2) {
-         }
-         try {
-            if (conn != null) {
-               conn.close();
-            }
-         } catch (SQLException se) {
-            se.printStackTrace();
-         }
-      }
+      theEntries = theDataBase.getEntries(userId);
    }
 
-   public void addEntry()
-   {
-      
+   public void addEntry(List<String> pIngredients,
+           List<String> pSymptoms, String pDate,
+           String pComments) {
+
+      theDataBase.addEntry(pIngredients, pSymptoms, pDate, 
+              pComments, userId);
    }
-   
+
    /**
     * @return the theEntries
     */
    public List<Entry> getTheEntries() {
       return theEntries;
    }
-   
-   
 }
