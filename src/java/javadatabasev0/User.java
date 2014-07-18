@@ -22,7 +22,7 @@ public class User {
    static final String USER = "root";
    static final String PASS = "";
 
-   User(String pUserName, String pUserPass) {
+   public User(String pUserName, String pUserPass) {
       theDataBase = new DB();
       theEntries = new ArrayList();
 
