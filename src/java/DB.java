@@ -21,30 +21,60 @@ public class DB {
    static String USER = "root";
    static String PASS = "";
 
-   public DB()
-   {
-        String path = System.getenv("OPENSHIFT_DATA_DIR");
-        
-        // if it's null it's NOT on openshift
-        if (path != null) { 
-           USER = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME"); 
-           PASS = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
-           
-           String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
-           String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
-           String name = "foodnotes";
-           
-           //DB_URL = "jdbc:" + System.getenv("OPENSHIFT_MYSQL_DB_URL");
-           DB_URL = "jdbc:mysql://" + host + ":" + port + "/" + name;
-        }    
-   
+   public DB() {
+      String path = System.getenv("OPENSHIFT_DATA_DIR");
+
+      // if it's null it's NOT on openshift
+      if (path != null) {
+         USER = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
+         PASS = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+
+         String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+         String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+         String name = "foodnotes";
+
+         //DB_URL = "jdbc:" + System.getenv("OPENSHIFT_MYSQL_DB_URL");
+         DB_URL = "jdbc:mysql://" + host + ":" + port + "/" + name;
+      }
+
    }
-   
+
+   public String getUserName(String pUId) throws Exception {
+      String theUName;
+      Statement stmt = null;
+      Connection conn = null;
+
+      try {
+         Class.forName("com.mysql.jdbc.Driver");
+         conn = DriverManager.getConnection(DB_URL, USER, PASS);
+         stmt = conn.createStatement();
+         String sql;
+
+         sql = "SELECT userName FROM users WHERE id='" + pUId + "'";
+                 
+         ResultSet rs = stmt.executeQuery(sql);
+         rs.next();
+         theUName = rs.getString("userName");
+      } catch (SQLException e) {
+         throw e;
+      } finally {
+         if (stmt != null) {
+            stmt.close();
+         }
+
+         if (conn != null) {
+            conn.close();
+         }
+      }
+
+      return theUName;
+   }
+
    String getUserId(String userName, String userPass) throws SQLException, Exception {
       String userId = "";
       Statement stmt = null;
       Connection conn = null;
-      
+
 
       try {
          Class.forName("com.mysql.jdbc.Driver");
@@ -58,9 +88,7 @@ public class DB {
          rs.next();
          userId = rs.getString("id");
       } catch (SQLException e) {
-         
          throw e;
-
       } finally {
          if (stmt != null) {
             stmt.close();

@@ -23,12 +23,12 @@ public class User {
    static final String PASS = "";
    String userName;
    
-   public User(String pUserId)
+   public User(String pUserId) throws Exception
    {
       userId = pUserId;      
       theDataBase = new DB();
       theEntries = new ArrayList();
-      
+      theDataBase.getUserName(userId);
       createEntryList();
    }
    
@@ -37,7 +37,7 @@ public class User {
       return userName;
    }
    
-   public User(String pUserName, String pUserPass) throws SQLException, Exception {
+   public User(String pUserName, String pUserPass) throws Exception {
       userName = pUserName;
       theDataBase = new DB();
       theEntries = new ArrayList();
