@@ -26,6 +26,10 @@ public class User {
    public User(String pUserId)
    {
       userId = pUserId;      
+      theDataBase = new DB();
+      theEntries = new ArrayList();
+      
+      createEntryList();
    }
    
    public String getUserName()
