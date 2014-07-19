@@ -45,7 +45,11 @@ public class User {
       userId = theDataBase.getUserId(pUserName, pUserPass);
       createEntryList();
    }
-
+   
+   public String getId()
+   {
+       return userId;
+   }
    @Override
    public String toString() {
       String userStr;
