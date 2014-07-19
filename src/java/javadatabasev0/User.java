@@ -28,7 +28,7 @@ public class User {
       userId = pUserId;      
       theDataBase = new DB();
       theEntries = new ArrayList();
-      theDataBase.getUserName(userId);
+      userName = theDataBase.getUserName(userId);
       createEntryList();
    }
    
