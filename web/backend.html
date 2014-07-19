@@ -5,139 +5,150 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-<head>
-<title>FoodNotes ~ Backend</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
-<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.css">
-<link rel="stylesheet" href="/bower_components/foodNotes/main.css">
+    <head>
+        <title>FoodNotes ~ Backend</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.css">
+        <link rel="stylesheet" href="/bower_components/foodNotes/main.css">
 
-<script src="/bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="/bower_components/foodNotes/controllers.js"></script>
-<script src="/bower_components/foodNotes/app.js"></script>
-</head>
-<body role="document" ng-app="foodNotes">
+        <script src="/bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="/bower_components/foodNotes/controllers.js"></script>
+        <script src="/bower_components/foodNotes/app.js"></script>
+    </head>
+    <body role="document" ng-app="foodNotes">
 
-<div class="container" ng-controller="PageController as page">
-   <div ng-class="location.path().slice(1)">
-      {{ location.path().slice(1)  }}
-
-
-      <!-- Adding interface -->
-      <div class="over-page" ng-controller="AddingController as adder">
-         <div class="inner-space">
-            <h1>Adding New log</h1>
-            <button class="btn btn-warn" ng-click="page.mainPage()">Cancel</button>
-            <button class="btn btn-primary" ng-click="">Save</button>
-
-            <form role="form">
-               <div class="form-group">
-                  <label for="titleInput">Title</label>
-                  <input ng-model="log.title" type="text" class="form-control" id="titleInput" placeholder="Enter a title">
-               </div>
-               <div class="form-group">
-                  <label for="titleInput">Description</label>
-                  <textarea ng-model="log.desc" class="form-control" rows="3"></textarea>
-               </div>
-
-               <div class="">
-                  <div ng-repeat="ing in log.ingredients track by $index">
-                     <div class="little-space form-inline">
-                        <input ng-model="ing.name" type="text" class="form-control" id="titleInput" placeholder="Enter an Ingredient">
-                        <button class="btn btn-danger" ng-click="adder.removeIngredient($index)"><i class="glyphicon glyphicon-remove"></i></button>
-                        <button class="btn btn-default" ng-click=""><i class="glyphicon glyphicon-search"></i></button>
-                     </div>
-
-                     <div class="list-group" ng-show="ing.name.length > 0 && log.suj.indexOf(ing.name) == -1">
-                        <a ng-repeat="suj in log.suj | filter:ing.name" href=""  class="list-group-item" ng-click="$parent.ing.name = suj">
-                           {{ suj }}
-                        </a>
-                     </div>
-
-                  </div>
-
-                  <button class="little-space btn btn-primary" ng-click="adder.addIngredient()">Add Ingredient</button>
-               </div>
-
-               <div class="" ng-repeat="sym in log.symptoms track by $index">
-                  <div class="form-inline">
-                     <input ng-model="sym.name" type="text" class="form-control" id="titleInput" placeholder="Enter a Symptom">
-                     <button class="btn btn-danger" ng-click="adder.removeSymptom($index)"><i class="glyphicon glyphicon-remove"></i></button>
-                  </div>
-
-                  <div class="list-group" ng-show="sym.name.length > 0 && log.symSuj.indexOf(sym.name) == -1">
-                     <a ng-repeat="suj in log.symSuj | filter:sym.name" href=""  class="list-group-item" ng-click="$parent.sym.name = suj">
-                        {{ suj }}
-                     </a>
-                  </div>
+        <div class="container" ng-controller="PageController as page">
+            <div ng-class="location.path().slice(1)">
+                {{ location.path().slice(1)}}
 
 
-               </div>
+                <!-- Adding interface -->
+                <div class="over-page" ng-controller="AddingController as adder">
+                    <div class="inner-space">
+                        <h1>Adding New log</h1>
+                        <button class="btn btn-warn" ng-click="page.mainPage()">Cancel</button>
+                        <button class="btn btn-primary" ng-click="">Save</button>
 
-               <button class="little-space btn btn-primary" ng-click="adder.addSymptom()">Add Symptom</button>
-            </form>
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="titleInput">Title</label>
+                                <input ng-model="log.title" type="text" class="form-control" id="titleInput" placeholder="Enter a title">
+                            </div>
+                            <div class="form-group">
+                                <label for="titleInput">Description</label>
+                                <textarea ng-model="log.desc" class="form-control" rows="3"></textarea>
+                            </div>
+
+                            <div class="">
+                                <div ng-repeat="ing in log.ingredients track by $index">
+                                    <div class="little-space form-inline">
+                                        <input ng-model="ing.name" type="text" class="form-control" id="titleInput" placeholder="Enter an Ingredient">
+                                        <button class="btn btn-danger" ng-click="adder.removeIngredient($index)"><i class="glyphicon glyphicon-remove"></i></button>
+                                        <button class="btn btn-default" ng-click=""><i class="glyphicon glyphicon-search"></i></button>
+                                    </div>
+
+                                    <div class="list-group" ng-show="ing.name.length > 0 && log.suj.indexOf(ing.name) == - 1">
+                                        <a ng-repeat="suj in log.suj| filter:ing.name" href=""  class="list-group-item" ng-click="$parent.ing.name = suj">
+                                            {{ suj}}
+                                        </a>
+                                    </div>
+
+                                </div>
+
+                                <button class="little-space btn btn-primary" ng-click="adder.addIngredient()">Add Ingredient</button>
+                            </div>
+
+                            <div class="" ng-repeat="sym in log.symptoms track by $index">
+                                <div class="form-inline">
+                                    <input ng-model="sym.name" type="text" class="form-control" id="titleInput" placeholder="Enter a Symptom">
+                                    <button class="btn btn-danger" ng-click="adder.removeSymptom($index)"><i class="glyphicon glyphicon-remove"></i></button>
+                                </div>
+
+                                <div class="list-group" ng-show="sym.name.length > 0 && log.symSuj.indexOf(sym.name) == - 1">
+                                    <a ng-repeat="suj in log.symSuj| filter:sym.name" href=""  class="list-group-item" ng-click="$parent.sym.name = suj">
+                                        {{ suj}}
+                                    </a>
+                                </div>
+
+
+                            </div>
+
+                            <button class="little-space btn btn-primary" ng-click="adder.addSymptom()">Add Symptom</button>
+                        </form>
 
 
 
-         </div>
-      </div>
+                    </div>
+                </div>
 
-      <div class="little-space pull-right" ng-controller="UserController as user">
-         Welcome {{ name }}.
-      </div>
-      <h1> FoodNotes </h1>
-      <div ng-show="">
-      </div>
-      <div ng-controller="HistoryController as history" class="row">
-         <div class="col-lg-12">
-            <div class="little-space btn-group pull-right">
-               <button class="btn btn-default" ng-click="history.prev()" >Previous</button>
-               <button class="btn btn-default .visible-md .visible-lg" ng-click="history.next()" >Next</button>
+                <div class="little-space pull-right" ng-controller="UserController as user">
+                    Welcome {{ name}}.
+                </div>
+                <h1> FoodNotes </h1>
+                <div ng-show="">
+                </div>
+                <div ng-controller="HistoryController as history" class="row">
+                    <div class="col-lg-12">
+                        <div class="little-space btn-group pull-right">
+                            <button class="btn btn-default" ng-click="history.prev()" >Previous</button>
+                            <button class="btn btn-default .visible-md .visible-lg" ng-click="history.next()" >Next</button>
+                        </div>
+                        <button class="little-space btn btn-default pull-right" ng-click="history.newest()" >Newest</button>
+                        <button class="little-space pull-left btn btn-primary" ng-click="page.addPage()">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            New Log
+                        </button>
+                    </div>
+                    <div class="col-lg-12" ng-controller="ErrorController">
+                        <div ng-show="error.history" class="alert alert-danger">
+                            Woops! Looks like there was an error loading your history!
+                        </div>
+                        <h2 class="text-center" ng-show="history.getHist().length === 0">
+                            No entries :( <br />
+                            <button class="btn btn-default" ng-click="page.addPage()" > Create one </button> 
+                        </h2>
+                        <br class="clearfix" />
+                    </div>
+
+
+                    <div ng-repeat="day in history.getHist()" class="col-md-4">
+                        <h2 class="page-header">
+                            {{ day.date | date : 'EEEE' }}
+                            <small>{{ day.date | date : 'MMM, d y' }}</small>
+                        </h2>
+                        <div class="panel panel-default" ng-repeat="entry in day.entries">
+                            <div class="panel-heading">
+                                <strong>{{ entry.name}}</strong> <small>{{ entry.time}}</small>
+                                <a class="btn btn-default btn-sm pull-right" href="#Edit"><i class="glyphicon glyphicon-pencil"></i></a>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+
+                                <p>{{ entry.description}}</p>
+
+                                Food Items:
+                                <ul>
+                                    <li ng-repeat="ingredient in entry.ingredients">
+                                        {{ ingredient}}
+                                    </li>
+                                </ul>
+
+                                Symptoms:
+                                <ul>
+                                    <li ng-repeat="symptom in entry.symptoms">
+                                        {{ symptom}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button class="little-space btn btn-default pull-right" ng-click="history.newest()" >Newest</button>
-            <button class="little-space pull-left btn btn-primary" ng-click="page.addPage()">
-               <i class="glyphicon glyphicon-plus"></i>
-               New Log
-            </button>
-         </div>
+        </div>
 
-         <div ng-repeat="day in history.getHist()" class="col-md-4">
-            <h2 class="page-header">
-               {{ day.date | date : 'EEEE' }}
-               <small>{{ day.date | date : 'MMM, d y' }}</small>
-            </h2>
-            <div class="panel panel-default" ng-repeat="entry in day.entries">
-               <div class="panel-heading">
-                  <strong>{{ entry.name }}</strong> <small>{{ entry.time }}</small>
-                  <a class="btn btn-default btn-sm pull-right" href="#Edit"><i class="glyphicon glyphicon-pencil"></i></a>
-                  <div class="clearfix"></div>
-               </div>
-               <div class="panel-body">
-
-                  <p>{{ entry.description }}</p>
-
-                  Food Items:
-                  <ul>
-                     <li ng-repeat="ingredient in entry.ingredients">
-                     {{ ingredient }}
-                     </li>
-                  </ul>
-
-                  Symptoms:
-                  <ul>
-                     <li ng-repeat="symptom in entry.symptoms">
-                     {{ symptom }}
-                     </li>
-                  </ul>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-
-</body>
+    </body>
 </html>
 

@@ -89,7 +89,7 @@
     /**
      * A controller that controlls the history tab
      */
-    fc.controller('HistoryController', function($scope, $http, foodAPI) {
+    fc.controller('HistoryController', function($scope, foodAPI) {
         $scope.days = [];
         $scope.hist = [];
         $scope.offset = 0;
@@ -98,9 +98,8 @@
         promise.success(function(data, status, headers, config) {
             $scope.hist = data;
         });
-        promise.error(function(data, status, headers, config) {
-            console.error(data, status, headers, config);
-        });
+       
+        
         this.newest = function() {
             $scope.offset = 0;
         };
@@ -120,24 +119,49 @@
             return $scope.hist.slice($scope.offset, $scope.offset + max);
         };
     });
-    
-    
-    fc.factory('foodAPI', function($http) {
+
+
+    fc.factory('foodAPI', function($http, error) {
         return {
             getHistory: function() {
                 //return $http.get("/bower_components/foodNotes/hist.json");
-                return $http.get("/api/getHistory");
+                var promise = $http.get("/api/getHistory-");
+                
+                promise.error(function() {
+                    error.history = true;
+                });
+                return promise;
             },
             getUsername: function() {
                 //return $http.get("/bower_components/foodNotes/name.json");
-                return $http.get("/api/getUsername");
+                return $http.get("/api/getUsername").error(function() {
+                    error.username = true;
+                });
             },
             newEntry: function(log) {
-                return $http.post('/api/newEntry', log);
+                return $http.post('/api/newEntry', log).error(function() {
+                    error.newEntry = true;
+                });
             },
             updateEntry: function(log) {
-                return $http.post('/api/updateEntry', log);
+                return $http.post('/api/updateEntry', log).error(function() {
+                    error.newEntry = true;
+                });
             }
         };
+    });
+
+    fc.factory('error', function() {
+        return {
+            history: false,
+            username: false,
+            newEntry: false,
+            updatedEntry: false
+        };
+    });
+
+    fc.controller('ErrorController', function($scope, error) {
+        $scope.error = error;
+        console.log(error); 
     });
 })();
