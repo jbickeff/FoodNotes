@@ -16,7 +16,7 @@ class JavaDataBasev0 {
     static User theUser;
     static private DB theDataBase;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Connection conn = null;
         Statement stmt = null;
         theDataBase = new DB();
