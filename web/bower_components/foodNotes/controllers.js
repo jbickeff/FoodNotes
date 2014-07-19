@@ -71,6 +71,13 @@
         this.removeSymptom = function(index) {
             $scope.log.symptoms.splice(index, 1);
         };
+        
+        this.save = function() {
+            var promise = foodAPI.newEntry($scope.log);
+            promise.success(function () {
+                console.log('it worked!');
+            });
+        };
     });
     /**
      * A Controller for handling user information
@@ -125,7 +132,7 @@
         return {
             getHistory: function() {
                 //return $http.get("/bower_components/foodNotes/hist.json");
-                var promise = $http.get("/api/getHistory-");
+                var promise = $http.get("/api/getHistory");
                 
                 promise.error(function() {
                     error.history = true;
@@ -149,6 +156,11 @@
                 });
             }
         };
+    });
+    
+    fc.factory('history', function() {
+       var entrys = [];
+        return  
     });
 
     fc.factory('error', function() {

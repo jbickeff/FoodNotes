@@ -28,14 +28,14 @@ and open the template in the editor.
           </div>
           <div class="col-sm-4">
              <div class="well">
-                <form action="/SignIn" method="POST">
+                <form action="/loginServelet" method="POST">
                    <div class="form-group">
                       <label for="username">Username </label>
-                      <input type="email" class="form-control" id="username" placeholder="Username">
+                      <input type="text" class="form-control" id="username" name="username" placeholder="Username">
                    </div>
                    <div class="form-group">
                       <label for="Password">Password</label>
-                      <input type="password" class="form-control" id="Password" placeholder="Password">
+                      <input type="password" class="form-control" id="Password" name="password" placeholder="Password">
                    </div>
                    <p class="text-right">
                    <a href="/SignUp" class="btn btn-default">Sign up</a>
