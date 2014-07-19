@@ -6,8 +6,20 @@
 
 package servlets;
 
+import com.owlike.genson.Genson;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javadatabasev0.User;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,9 +47,42 @@ public class newEntry extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        /*
-        code goes here
-        */
+        Genson jsonConverter = new Genson();
+        
+        
+        Map<String, Object> maped;
+        maped = jsonConverter.deserialize(new InputStreamReader(request.getInputStream()), Map.class);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        response.getWriter().write(maped.toString());
+        List<Map<String, String>>ingMap = (List<Map<String, String>>) maped.get("ingredients");
+        List<String> ing = new ArrayList<String>();
+        for(Map m : ingMap)
+        {
+            ing.add((String) m.get("name"));
+        }
+        ingMap = (List<Map<String, String>>) maped.get("symptoms");
+        List<String> syp = new ArrayList<String>();
+        for(Map m : ingMap)
+        {
+            syp.add((String) m.get("name"));
+        }
+        String disc = (String) maped.get("desc");
+        String id = (String) request.getSession().getAttribute("id");
+        if (id == null)
+        {
+            id = "1";
+        }
+        try {
+            System.out.println("sp2");
+            User me = new User(id);
+            String time = dateFormat.format(cal.getTime());
+            me.addEntry(ing, syp, time, disc);
+        } 
+        catch (Exception ex) {
+            System.out.println(newEntry.class.getName());
+        }
+        
     }
 
     /**
