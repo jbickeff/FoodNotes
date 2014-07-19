@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javadatabasev0.Entry;
 import javadatabasev0.User;
 import javax.servlet.ServletException;
@@ -39,20 +41,24 @@ public class getUsername extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = (String) request.getSession().getAttribute("id");
-        if (id == null);
-        {
-            response.getWriter().write("failed to have a log in so random test id = 1");
-            id = "1";
+        try {
+            String id = (String) request.getSession().getAttribute("id");
+            if (id == null);
+            {
+                response.getWriter().write("failed to have a log in so random test id = 1");
+                id = "1";
+            }
+            Map<String, String> info = new HashMap();
+            User me = new User(id);
+            info.put("name", me.getUserName());
+            
+            Genson jsonConverter = new Genson();
+            String json = jsonConverter.serialize(info);
+            
+            response.getWriter().write(json);
+        } catch (Exception ex) {
+            System.out.println(getUsername.class.getName());
         }
-        Map<String, String> info = new HashMap();
-        User me = new User(id);
-        info.put("name", me.getUserName());
-        
-        Genson jsonConverter = new Genson();
-        String json = jsonConverter.serialize(info);
-        
-        response.getWriter().write(json);
     }
 
     /**

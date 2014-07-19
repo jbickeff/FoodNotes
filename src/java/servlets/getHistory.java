@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javadatabasev0.Entry;
 import javadatabasev0.User;
 import javax.servlet.ServletException;
@@ -38,21 +40,24 @@ public class getHistory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = (String) request.getSession().getAttribute("id");
-        if (id == null);
-        {
-            response.getWriter().write("failed to have a log in so random test id = 1");
-            id = "1";
+        try {
+            String id = (String) request.getSession().getAttribute("id");
+            if (id == null);
+            {
+                response.getWriter().write("failed to have a log in so random test id = 1");
+                id = "1";
+            }
+            Map<String, List<Entry>> info = new HashMap();
+            User me = new User(id);
+            List<Entry> history = me.getTheEntries();
+            System.out.println(history);
+            info.put("history", history);
+            Genson jsonConverter = new Genson();
+            String json = jsonConverter.serialize(info);
+            response.getWriter().write(json);
+        } catch (Exception ex) {
+            System.out.println(getHistory.class.getName());
         }
-        Map<String, List<Entry>> info = new HashMap();
-        User me = new User(id);
-        
-        List<Entry> history = me.getTheEntries();
-        System.out.println(history);
-        info.put("history", history);
-        Genson jsonConverter = new Genson();
-        String json = jsonConverter.serialize(info);
-        response.getWriter().write(json);
 
     }
 
