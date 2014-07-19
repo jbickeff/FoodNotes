@@ -43,10 +43,10 @@ public class getUsername extends HttpServlet {
             throws ServletException, IOException {
         try {
             String id = (String) request.getSession().getAttribute("id");
-            if (id == null);
+            if (id == null)
             {
-                response.getWriter().write("failed to have a log in so random test id = 1");
-                id = "1";
+                //response.getWriter().write("failed to have a log in so random test id = 1");
+                //id = "1";
             }
             Map<String, String> info = new HashMap();
             User me = new User(id);

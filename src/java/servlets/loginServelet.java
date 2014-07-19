@@ -39,13 +39,14 @@ public class loginServelet extends HttpServlet {
             throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        PrintWriter writer = response.getWriter();
-        writer.write(username + "");
-        writer.write(password + "");
+        //PrintWriter writer = response.getWriter();
+        //writer.write(username + "");
+        //writer.write(password + "");
         try {
             User user = new User(username, password);
             List<Entry> theEntries = user.getTheEntries();
-            writer.write("<br />" + theEntries.size());
+            //writer.write("<br />" + theEntries.size());
+            request.getSession().setAttribute("id", user.getId());
             response.sendRedirect("/backend.html");
             
             
