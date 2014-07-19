@@ -44,7 +44,6 @@ public class loginServelet extends HttpServlet {
         //writer.write(password + "");
         try {
             User user = new User(username, password);
-            List<Entry> theEntries = user.getTheEntries();
             //writer.write("<br />" + theEntries.size());
             request.getSession().setAttribute("id", user.getId());
             response.sendRedirect("/backend.html");
