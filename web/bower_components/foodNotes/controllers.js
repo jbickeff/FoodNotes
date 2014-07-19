@@ -132,11 +132,11 @@
                 //return $http.get("/bower_components/foodNotes/name.json");
                 return $http.get("/api/getUsername");
             },
-            putLog: function(log) {
-                return $http.post('/api/SaveLog', log);
+            newEntry: function(log) {
+                return $http.post('/api/newEntry', log);
             },
-            updateLog: function(log) {
-                return $http.post('/api/UpdateLog', log);
+            updateEntry: function(log) {
+                return $http.post('/api/updateEntry', log);
             }
         };
     });

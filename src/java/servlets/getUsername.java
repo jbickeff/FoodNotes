@@ -6,8 +6,10 @@
 
 package servlets;
 
+import com.owlike.genson.Genson;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,6 +37,14 @@ public class getUsername extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        Map<String, String> info = new HashMap();
+        
+        info.put("name", "serveletUsername");
+        
+        Genson jsonConverter = new Genson();
+        String json = jsonConverter.serialize(info);
+        
+        response.getWriter().write(json);
     }
 
     /**
