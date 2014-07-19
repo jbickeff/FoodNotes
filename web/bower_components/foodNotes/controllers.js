@@ -35,13 +35,17 @@
         $scope.log = {
             title: 'Snack',
             desc: '',
-            ingredients: [{name: ''}],
+            ingredients: [
+                {name: ''}
+            ],
             suj: [
                 'cheetos white',
                 'hot cheetos',
                 'hotdogs'
             ],
-            symptoms: [{name: 'asdf'}],
+            symptoms: [
+                {name: ''}
+            ],
             symSuj: [
                 'headache',
                 'stomach ache',
@@ -132,7 +136,7 @@
         return {
             getHistory: function() {
                 //return $http.get("/bower_components/foodNotes/hist.json");
-                var promise = $http.get("/api/getHistory");
+                var promise = $http.get("/FoodNotes/api/getHistory");
                 
                 promise.error(function() {
                     error.history = true;
@@ -141,17 +145,17 @@
             },
             getUsername: function() {
                 //return $http.get("/bower_components/foodNotes/name.json");
-                return $http.get("/api/getUsername").error(function() {
+                return $http.get("api/getUsername").error(function() {
                     error.username = true;
                 });
             },
             newEntry: function(log) {
-                return $http.post('/api/newEntry', log).error(function() {
+                return $http.post('api/newEntry', log).error(function() {
                     error.newEntry = true;
                 });
             },
             updateEntry: function(log) {
-                return $http.post('/api/updateEntry', log).error(function() {
+                return $http.post('api/updateEntry', log).error(function() {
                     error.newEntry = true;
                 });
             }
