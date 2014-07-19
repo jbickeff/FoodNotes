@@ -55,7 +55,8 @@ public class getHistory extends HttpServlet {
             Genson jsonConverter = new Genson();
             String json = jsonConverter.serialize(info);
             response.getWriter().write(json);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             
             response.getWriter().write(ex.toString());
