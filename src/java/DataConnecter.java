@@ -22,11 +22,12 @@ import java.util.Set;
 import java.net.MalformedURLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+/*
 import org.codehaus.jackson.map.JsonMappingException;
 //import org.codehaus.jackson.;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-
+*/
 
 /**
  *
@@ -51,6 +52,7 @@ public class DataConnecter {
 
     public List<BarcodeConnection> requestBarCode(String name)
     {
+        /*
         URL url;
         ObjectMapper mapper = new ObjectMapper();
         List<BarcodeConnection> options;
@@ -65,12 +67,15 @@ public class DataConnecter {
         }
        System.out.println("Spot3");
       
-        return options;
+        return options ;
+                */
+        return new ArrayList<BarcodeConnection>();
     }
     
     
     public List<FoodInfo> requestInfo(String barCode)
     {
+        /*
         ObjectMapper mapper = new ObjectMapper();
         List<FoodInfo> result = null;
         URL url;
@@ -88,7 +93,8 @@ public class DataConnecter {
             Logger.getLogger(DataConnecter.class.getName()).log(Level.SEVERE, null, ex);
         }
                
-        return result;
+        return result;*/
+        return new ArrayList<FoodInfo>();
     }
 
     
