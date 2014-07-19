@@ -9,7 +9,10 @@ package servlets;
 import com.owlike.genson.Genson;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import javadatabasev0.Entry;
+import javadatabasev0.User;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,10 +39,15 @@ public class getUsername extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String id = (String) request.getSession().getAttribute("id");
+        if (id == null);
+        {
+            response.getWriter().write("failed to have a log in so random test id = 1");
+            id = "1";
+        }
         Map<String, String> info = new HashMap();
-        
-        info.put("name", "serveletUsername");
+        User me = new User(id);
+        info.put("name", me.getUserName());
         
         Genson jsonConverter = new Genson();
         String json = jsonConverter.serialize(info);
