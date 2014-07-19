@@ -21,14 +21,33 @@ public class User {
    //  Database credentials
    static final String USER = "root";
    static final String PASS = "";
-
-   public User(String pUserName, String pUserPass) {
+   String userName;
+   
+   public User(String pUserId)
+   {
+      userId = pUserId;      
+   }
+   
+   public String getUserName()
+   {
+      return userName;
+   }
+   
+   public User(String pUserName, String pUserPass) throws SQLException, Exception {
+      userName = pUserName;
       theDataBase = new DB();
       theEntries = new ArrayList();
-
+      
       userId = theDataBase.getUserId(pUserName, pUserPass);
-
       createEntryList();
+   }
+
+   @Override
+   public String toString() {
+      String userStr;
+      System.out.println(userId);
+      userStr = "here userId: " + userId;
+      return userStr;
    }
 
    void createEntryList() {
@@ -39,7 +58,7 @@ public class User {
            List<String> pSymptoms, String pDate,
            String pComments) {
 
-      theDataBase.addEntry(pIngredients, pSymptoms, pDate, 
+      theDataBase.addEntry(pIngredients, pSymptoms, pDate,
               pComments, userId);
    }
 
