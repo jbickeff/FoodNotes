@@ -56,6 +56,9 @@ public class getHistory extends HttpServlet {
             String json = jsonConverter.serialize(info);
             response.getWriter().write(json);
         } catch (Exception ex) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            
+            response.getWriter().write(ex.toString());
             System.out.println(getHistory.class.getName());
         }
 
