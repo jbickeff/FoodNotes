@@ -16,15 +16,35 @@ import static javadatabasev0.User.DB_URL;
 public class DB {
 
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-   static final String DB_URL = "jdbc:mysql://localhost/foodnotes";
+   static String DB_URL = "jdbc:mysql://localhost/foodnotes";
    //  Database credentials
-   static final String USER = "root";
-   static final String PASS = "";
+   static String USER = "root";
+   static String PASS = "";
 
-   String getUserId(String userName, String userPass) {
+   public DB()
+   {
+        String path = System.getenv("OPENSHIFT_DATA_DIR");
+        
+        // if it's null it's NOT on openshift
+        if (path != null) { 
+           USER = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME"); 
+           PASS = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
+           
+           String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+           String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+           String name = "foodnotes";
+           
+           //DB_URL = "jdbc:" + System.getenv("OPENSHIFT_MYSQL_DB_URL");
+           DB_URL = "jdbc:mysql://" + host + ":" + port + "/" + name;
+        }    
+   
+   }
+   
+   String getUserId(String userName, String userPass) throws SQLException, Exception {
       String userId = "";
       Statement stmt = null;
       Connection conn = null;
+      
 
       try {
          Class.forName("com.mysql.jdbc.Driver");
@@ -37,22 +57,17 @@ public class DB {
          ResultSet rs = stmt.executeQuery(sql);
          rs.next();
          userId = rs.getString("id");
-      } catch (Exception e) {
-         System.out.println(e);
+      } catch (SQLException e) {
+         
+         throw e;
 
       } finally {
-         try {
-            if (stmt != null) {
-               stmt.close();
-            }
-         } catch (SQLException se2) {
+         if (stmt != null) {
+            stmt.close();
          }
-         try {
-            if (conn != null) {
-               conn.close();
-            }
-         } catch (SQLException se) {
-            se.printStackTrace();
+
+         if (conn != null) {
+            conn.close();
          }
       }
       return userId;
@@ -571,9 +586,9 @@ public class DB {
 
          conn = DriverManager.getConnection(DB_URL, USER, PASS);
          stmt = conn.createStatement();
-         
-         sql = "INSERT INTO users (userName, password) VALUES ('" + userName + 
-                 "', '" + pass + "')";
+
+         sql = "INSERT INTO users (userName, password) VALUES ('" + userName
+                 + "', '" + pass + "')";
          stmt.executeUpdate(sql);
 
          stmt.close();
