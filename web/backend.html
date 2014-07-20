@@ -22,7 +22,6 @@ and open the template in the editor.
 
         <div class="container" ng-controller="PageController as page">
             <div ng-class="location.path().slice(1)">
-                {{ location.path().slice(1)}}
 
 
                 <!-- Adding interface -->
@@ -30,13 +29,9 @@ and open the template in the editor.
                     <div class="inner-space">
                         <h1>Adding New log</h1>
                         <button class="btn btn-warn" ng-click="page.mainPage()">Cancel</button>
-                        <button class="btn btn-primary" ng-click="">Save</button>
+                        <button ng-hide="adder.saving" class="btn btn-primary" ng-click="adder.save()">Save</button>
 
                         <form role="form">
-                            <div class="form-group">
-                                <label for="titleInput">Title</label>
-                                <input ng-model="log.title" type="text" class="form-control" id="titleInput" placeholder="Enter a title">
-                            </div>
                             <div class="form-group">
                                 <label for="titleInput">Description</label>
                                 <textarea ng-model="log.desc" class="form-control" rows="3"></textarea>
@@ -79,7 +74,7 @@ and open the template in the editor.
                             <button class="little-space btn btn-primary" ng-click="adder.addSymptom()">Add Symptom</button>
 
                             <div>
-                                <button class="btn btn-primary" ng-click="adder.save()" > Save </button>
+                                <button class="btn btn-primary" ng-hide="adder.saving" ng-click="adder.save()" > Save </button>
                             </div>
                         </form>
 
@@ -118,12 +113,14 @@ and open the template in the editor.
                         <br class="clearfix" />
                     </div>
 
+                    <br class="clearfix" />
 
                     <br class="clearfix" />
-                    <div class="col-md-3">
-                        <div class="panel panel-default" ng-repeat="entry in history.getHist()">
+                    <div class="col-md-3" ng-repeat="entry in history.getHist()">
+                        <div class="panel panel-default fixed-height" >
                             <div class="panel-heading">
-                                <strong>{{ entry.name }}</strong>
+                                <strong>{{ entry.date | date : 'EEEE' }}</strong>
+                                <small>{{ entry.date | date : 'MMM, d y' }}</small>
                                 <a class="btn btn-default btn-sm pull-right" href="#Edit"><i class="glyphicon glyphicon-pencil"></i></a>
                                 <div class="clearfix"></div>
                             </div>
@@ -131,13 +128,13 @@ and open the template in the editor.
 
                                 <p>{{ entry.comments}}</p>
                                 <div>
-                                    {{ entry.date | date : 'EEEE' }}
-                                    <small>{{ entry.date | date : 'MMM, d y' }}</small>
+
+
                                 </div>
                                 Food Items:
                                 <ul>
                                     <li ng-repeat="ingredient in entry.theIngredients">
-                                        {{ ingredient.name}}
+                                        {{ ingredient.ingredient}}
                                     </li>
                                 </ul>
 

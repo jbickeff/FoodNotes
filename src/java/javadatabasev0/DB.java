@@ -16,7 +16,7 @@ public class DB {
     static String DB_URL = "jdbc:mysql://localhost/foodnotes";
     //  Database credentials
     static String USER = "root";
-    static String PASS = "cangetin";
+    static String PASS = "";
 
     public DB() {
         String path = System.getenv("OPENSHIFT_DATA_DIR");
