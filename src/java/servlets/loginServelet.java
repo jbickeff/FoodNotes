@@ -46,7 +46,7 @@ public class loginServelet extends HttpServlet {
             User user = new User(username, password);
             //writer.write("<br />" + theEntries.size());
             request.getSession().setAttribute("id", user.getId());
-            response.sendRedirect("/backend.html");
+            response.sendRedirect("backend.html");
             
             
         } catch (Exception ex) {
