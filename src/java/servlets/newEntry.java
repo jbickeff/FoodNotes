@@ -45,16 +45,13 @@ public class newEntry extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
+            throws ServletException, IOException {        
         Genson jsonConverter = new Genson();
-        
-        
         Map<String, Object> maped;
         maped = jsonConverter.deserialize(new InputStreamReader(request.getInputStream()), Map.class);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
-        response.getWriter().write(maped.toString());
+        //response.getWriter().write(maped.toString());
         List<Map<String, String>>ingMap = (List<Map<String, String>>) maped.get("ingredients");
         List<String> ing = new ArrayList<String>();
         for(Map m : ingMap)
@@ -62,19 +59,20 @@ public class newEntry extends HttpServlet {
             ing.add((String) m.get("name"));
         }
         ingMap = (List<Map<String, String>>) maped.get("symptoms");
+        System.out.println(ing);
         List<String> syp = new ArrayList<String>();
         for(Map m : ingMap)
         {
             syp.add((String) m.get("name"));
         }
         String disc = (String) maped.get("desc");
+        System.out.println(ingMap);
         String id = (String) request.getSession().getAttribute("id");
         if (id == null)
         {
             id = "1";
         }
         try {
-            System.out.println("sp2");
             User me = new User(id);
             String time = dateFormat.format(cal.getTime());
             me.addEntry(ing, syp, time, disc);

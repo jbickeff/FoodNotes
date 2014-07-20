@@ -76,4 +76,12 @@ public class User {
    public List<Entry> getTheEntries() {
       return theEntries;
    }
+   
+   public void upDateEntry(List<String> pIngredients,
+           List<String> pSymptoms, String pComments, int entryID) throws Exception 
+   {
+       theDataBase.upDateEntry(pIngredients, pSymptoms,
+              pComments, entryID, userId);
+   }
+   
 }
