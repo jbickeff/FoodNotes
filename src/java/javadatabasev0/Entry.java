@@ -21,7 +21,7 @@ public class Entry {
    static final String USER = "root";
    static final String PASS = "";
 
-   Entry(String pentryId, String puserId, String pdate, String pcomments) {
+   Entry(String pentryId, String puserId, String pdate, String pcomments) throws Exception {
       theDataBase = new DB();
       entryId = pentryId;
       userId = puserId;

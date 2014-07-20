@@ -58,13 +58,13 @@ public class User {
       return userStr;
    }
 
-   void createEntryList() {
+   void createEntryList() throws Exception {
       theEntries = theDataBase.getEntries(userId);
    }
 
    public void addEntry(List<String> pIngredients,
            List<String> pSymptoms, String pDate,
-           String pComments) {
+           String pComments) throws Exception {
 
       theDataBase.addEntry(pIngredients, pSymptoms, pDate,
               pComments, userId);
