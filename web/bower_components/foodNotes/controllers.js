@@ -7,19 +7,19 @@
         this.changePage = function(newUrl) {
             $scope.pageUrl = newUrl;
             window.location.hash = newUrl;
-        }
+        };
 
         this.addPage = function() {
             this.changePage('/page-add');
-        }
+        };
 
         this.mainPage = function() {
             this.changePage('/main');
-        }
+        };
 
         this.getURL = function() {
             return $scope.pageUrl.slice(1);
-        }
+        };
 
         $scope.$watch('location.path()', function() {
             $scope.pageUrl = $location.path();
@@ -31,6 +31,8 @@
      * logs
      */
     fc.controller('AddingController', function($scope, foodAPI) {
+        
+        this.saving = false;
 
         $scope.log = {
             title: 'Snack',
@@ -75,11 +77,12 @@
         this.removeSymptom = function(index) {
             $scope.log.symptoms.splice(index, 1);
         };
-        
+
         this.save = function() {
+            this.saving = true;
             var promise = foodAPI.newEntry($scope.log);
-            promise.success(function () {
-                console.log('it worked!');
+            promise.success(function() {
+                
             });
         };
     });
@@ -97,20 +100,23 @@
             console.error(data, status, headers, config);
         });
     });
-    /**
+    
+    
+    /*
      * A controller that controlls the history tab
      */
-    fc.controller('HistoryController', function($scope, foodAPI) {
+    fc.controller('HistoryController', function($scope, foodAPI, history) {
         $scope.days = [];
         $scope.hist = [];
         $scope.offset = 0;
         var promise = foodAPI.getHistory();
 
         promise.success(function(data, status, headers, config) {
-            $scope.hist = data;
+            $scope.hist = data.history;
+            
         });
-       
-        
+
+
         this.newest = function() {
             $scope.offset = 0;
         };
@@ -126,8 +132,7 @@
             }
         };
         this.getHist = function() {
-            var max = $scope.hist.length - $scope.offset - 3 >= 3 ? 3 : $scope.hist.length - $scope.offset;
-            return $scope.hist.slice($scope.offset, $scope.offset + max);
+            return $scope.hist;
         };
     });
 
@@ -137,7 +142,7 @@
             getHistory: function() {
                 //return $http.get("/bower_components/foodNotes/hist.json");
                 var promise = $http.get("/FoodNotes/api/getHistory");
-                
+
                 promise.error(function() {
                     error.history = true;
                 });
@@ -161,10 +166,14 @@
             }
         };
     });
-    
+
     fc.factory('history', function() {
-       var entrys = [];
-        return  
+        return  {
+            entries: null,
+            convertAPI: function(json) {
+                console.log(json);
+            }
+        };
     });
 
     fc.factory('error', function() {
@@ -178,6 +187,6 @@
 
     fc.controller('ErrorController', function($scope, error) {
         $scope.error = error;
-        console.log(error); 
+        console.log(error);
     });
 })();

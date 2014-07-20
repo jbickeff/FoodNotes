@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "loginServelet", urlPatterns = {"/loginServelet"})
 public class loginServelet extends HttpServlet {
 
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -37,22 +36,19 @@ public class loginServelet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        //PrintWriter writer = response.getWriter();
-        //writer.write(username + "");
-        //writer.write(password + "");
+        
         try {
             User user = new User(username, password);
-            //writer.write("<br />" + theEntries.size());
             request.getSession().setAttribute("id", user.getId());
             response.sendRedirect("backend.html");
-            
-            
+
         } catch (Exception ex) {
             response.sendRedirect("/index.html#error");
             //writer.write(ex + "");
-        }
+        } 
     }
 
     /**

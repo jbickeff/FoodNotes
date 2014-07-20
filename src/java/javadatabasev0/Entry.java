@@ -54,7 +54,7 @@ public class Entry {
     * @return the date
     */
    public String getDate() {
-      return date;
+      return date.split(" ")[0];
    }
 
    /**
