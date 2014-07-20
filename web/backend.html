@@ -46,7 +46,7 @@ and open the template in the editor.
                                     </div>
 
                                     <div class="list-group" ng-show="ing.name.length > 0 && log.suj.indexOf(ing.name) == - 1">
-                                        <a ng-repeat="suj in log.suj| filter:ing.name" href=""  class="list-group-item" ng-click="$parent.ing.name = suj">
+                                        <a ng-repeat="suj in log.suj | filter:ing.name" href=""  class="list-group-item" ng-click="$parent.ing.name = suj">
                                             {{ suj}}
                                         </a>
                                     </div>
@@ -63,7 +63,7 @@ and open the template in the editor.
                                 </div>
 
                                 <div class="list-group" ng-show="sym.name.length > 0 && log.symSuj.indexOf(sym.name) == - 1">
-                                    <a ng-repeat="suj in log.symSuj| filter:sym.name" href=""  class="list-group-item" ng-click="$parent.sym.name = suj">
+                                    <a ng-repeat="suj in log.symSuj | filter:sym.name" href=""  class="list-group-item" ng-click="$parent.sym.name = suj">
                                         {{ suj}}
                                     </a>
                                 </div>
@@ -78,7 +78,7 @@ and open the template in the editor.
                             </div>
                         </form>
 
-
+{{ log }}
 
                     </div>
                 </div>
@@ -88,15 +88,9 @@ and open the template in the editor.
                     Welcome {{ name}}.
                 </div>
                 <h1> FoodNotes </h1>
-                <div ng-show="">
-                </div>
+
                 <div ng-controller="HistoryController as history" class="row">
                     <div class="col-lg-12">
-                        <div class="little-space btn-group pull-right">
-                            <button class="btn btn-default" ng-click="history.prev()" >Previous</button>
-                            <button class="btn btn-default .visible-md .visible-lg" ng-click="history.next()" >Next</button>
-                        </div>
-                        <button class="little-space btn btn-default pull-right" ng-click="history.newest()" >Newest</button>
                         <button class="little-space pull-left btn btn-primary" ng-click="page.addPage()">
                             <i class="glyphicon glyphicon-plus"></i>
                             New Log
@@ -104,12 +98,8 @@ and open the template in the editor.
                     </div>
                     <div class="col-lg-12" ng-controller="ErrorController">
                         <div ng-show="error.history" class="alert alert-danger">
-                            Woops! Looks like there was an error loading your history!
+                            Woops! Looks like there was an error loading your entries!
                         </div>
-                        <h2 class="text-center" ng-show="history.getHist().length === 0">
-                            No entries :( <br />
-                            <button class="btn btn-default" ng-click="page.addPage()" > Create one </button> 
-                        </h2>
                         <br class="clearfix" />
                     </div>
 
@@ -119,6 +109,7 @@ and open the template in the editor.
                     <div class="col-md-3" ng-repeat="entry in history.getHist()">
                         <div class="panel panel-default fixed-height" >
                             <div class="panel-heading">
+                                <span class="badge"> #{{ entry.entryId }} </span>
                                 <strong>{{ entry.date | date : 'EEEE' }}</strong>
                                 <small>{{ entry.date | date : 'MMM, d y' }}</small>
                                 <a class="btn btn-default btn-sm pull-right" href="#Edit"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -126,22 +117,22 @@ and open the template in the editor.
                             </div>
                             <div class="panel-body">
 
-                                <p>{{ entry.comments}}</p>
+                                <blockquote>{{ entry.comments}}</blockquote>
                                 <div>
 
 
                                 </div>
-                                Food Items:
+                                <strong>Food Items:</strong>
                                 <ul>
                                     <li ng-repeat="ingredient in entry.theIngredients">
                                         {{ ingredient.ingredient}}
                                     </li>
                                 </ul>
 
-                                Symptoms:
+                                <strong>Symptoms:</strong>
                                 <ul>
                                     <li ng-repeat="symptom in entry.theSymptoms">
-                                        {{ symptom.name}}
+                                        {{ symptom.name }}
                                     </li>
                                 </ul>
                             </div>

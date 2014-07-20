@@ -1,13 +1,19 @@
 (function() {
     "use strict";
     var fc = angular.module('foodControllers', []);
-    fc.controller('PageController', function($scope, foodAPI, $location) {
+    fc.controller('PageController', function($scope, $rootScope, foodAPI, $location) {
         $scope.pageUrl = $location.path();
         $scope.location = $location;
+        var that = this;
+
         this.changePage = function(newUrl) {
             $scope.pageUrl = newUrl;
             window.location.hash = newUrl;
         };
+
+        $rootScope.$on('saved', function() {
+            that.mainPage();
+        });
 
         this.addPage = function() {
             this.changePage('/page-add');
@@ -30,8 +36,8 @@
      * this is in charge of the interface for adding new
      * logs
      */
-    fc.controller('AddingController', function($scope, foodAPI) {
-        
+    fc.controller('AddingController', function($rootScope, $scope, foodAPI) {
+
         this.saving = false;
 
         $scope.log = {
@@ -62,13 +68,15 @@
         this.addIngredient = function() {
             $scope.log.ingredients.push({name: ''});
         };
+
         this.removeIngredient = function(index) {
             $scope.log.ingredients.splice(index, 1);
         };
+
         this.selectIng = function(index, suj) {
             $scope.log.ingredients[index].name = suj;
             console.log('hello');
-        }
+        };
 
         // symptoms stuff
         this.addSymptom = function() {
@@ -80,9 +88,11 @@
 
         this.save = function() {
             this.saving = true;
+            var that = this;
             var promise = foodAPI.newEntry($scope.log);
             promise.success(function() {
-                
+                that.saving = false;
+                $rootScope.$emit('saved', $scope.log);
             });
         };
     });
@@ -100,22 +110,32 @@
             console.error(data, status, headers, config);
         });
     });
-    
-    
+
+
     /*
      * A controller that controlls the history tab
      */
-    fc.controller('HistoryController', function($scope, foodAPI, history) {
+    fc.controller('HistoryController', function($scope, $rootScope, foodAPI, history) {
         $scope.days = [];
         $scope.hist = [];
         $scope.offset = 0;
-        var promise = foodAPI.getHistory();
 
-        promise.success(function(data, status, headers, config) {
-            $scope.hist = data.history;
-            
+        this.update = function() {
+            var promise = foodAPI.getHistory();
+
+            promise.success(function(data, status, headers, config) {
+                $scope.hist = data.history.reverse();
+
+            });
+        };
+        
+        this.update();
+        
+        var that = this;
+
+        $rootScope.$on('saved', function() {
+            that.update();
         });
-
 
         this.newest = function() {
             $scope.offset = 0;
