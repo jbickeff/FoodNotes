@@ -16,7 +16,7 @@ public class DB {
     static String DB_URL = "jdbc:mysql://localhost/foodnotes";
     //  Database credentials
     static String USER = "root";
-    static String PASS = "";
+    static String PASS = "cangetin";
 
     public DB() {
         String path = System.getenv("OPENSHIFT_DATA_DIR");
@@ -563,5 +563,49 @@ public class DB {
         }
 
         return userAdded;
+    }
+
+    Boolean upDateEntry(List<String> pIngredients, List<String> pSymptoms, 
+             String pComments, int entryId, String userId) throws Exception {
+        Boolean additionComplete = false;
+        Boolean entryAdded = false;
+
+        Statement stmt = null;
+        Connection conn = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String sql;
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            sql = "UPDATE entries SET comments ='"+pComments+"' WHERE id = " +entryId;
+
+            stmt.executeUpdate(sql);
+
+
+            ResultSet rs = stmt.executeQuery(sql);
+            stmt.close();
+            conn.close();
+            entryAdded = true;
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+
+            if (conn != null) {
+                conn.close();
+            }
+
+        }
+        String sEntryId = entryId+"";
+        if (addIngredients(pIngredients, sEntryId)
+                && addSymptoms(pSymptoms, sEntryId) && entryAdded) {
+            additionComplete = true;
+        }
+
+        return additionComplete;
     }
 }
