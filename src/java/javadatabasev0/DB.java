@@ -67,7 +67,7 @@ public class DB {
         return theUName;
     }
 
-    String getUserId(String userName, String userPass) throws SQLException, Exception {
+    String getUserId(String userName, String userPass) throws Exception {
         String userId = "";
         Statement stmt = null;
         Connection conn = null;
@@ -141,7 +141,7 @@ public class DB {
 
     Boolean addEntry(List<String> pIngredients,
             List<String> pSymptoms, String pDate,
-            String pComments, String userId) throws ClassNotFoundException, SQLException, ParseException, Exception {
+            String pComments, String userId) throws Exception {
         Boolean additionComplete = false;
         Boolean entryAdded = false;
 
@@ -174,7 +174,7 @@ public class DB {
             conn.close();
             entryAdded = true;
 
-        } catch (ClassNotFoundException | SQLException | ParseException e) {
+        } catch (Exception e) {
             throw e;
         } finally {
             if (stmt != null) {
@@ -195,7 +195,7 @@ public class DB {
         return additionComplete;
     }
 
-    Boolean addIngredients(List<String> pIngredients, String entryId) throws ClassNotFoundException, SQLException, Exception {
+    Boolean addIngredients(List<String> pIngredients, String entryId) throws Exception {
         Boolean ingredientsAdded = false;
         Statement stmt = null;
         Connection conn = null;
@@ -234,7 +234,7 @@ public class DB {
                 conn.close();
                 ingredientsAdded = true;
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (Exception e) {
             throw e;
 
         } finally {
@@ -269,7 +269,7 @@ public class DB {
             stmt.close();
             conn.close();
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (Exception e) {
             throw e;
 
         } finally {
@@ -282,7 +282,7 @@ public class DB {
         }
     }
 
-    Boolean addSymptoms(List<String> pSymptoms, String entryId) throws ClassNotFoundException, SQLException {
+    Boolean addSymptoms(List<String> pSymptoms, String entryId) throws Exception {
         Boolean symptomsAdded = false;
         Statement stmt = null;
         Connection conn = null;
@@ -318,7 +318,7 @@ public class DB {
             conn.close();
             symptomsAdded = true;
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (Exception e) {
             throw e;
 
         } finally {
@@ -333,7 +333,7 @@ public class DB {
         return symptomsAdded;
     }
 
-    void updateSymptomEntry(List<String> pIds, String pEntryId) throws ClassNotFoundException, SQLException {
+    void updateSymptomEntry(List<String> pIds, String pEntryId) throws Exception {
         Statement stmt = null;
         Connection conn = null;
 
@@ -353,7 +353,7 @@ public class DB {
             stmt.close();
             conn.close();
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (Exception e) {
             throw e;
 
         } finally {
@@ -367,7 +367,7 @@ public class DB {
         }
     }
 
-    List<Ingredient> gatherIngredients(String entryId) throws SQLException, ClassNotFoundException, Exception {
+    List<Ingredient> gatherIngredients(String entryId) throws Exception {
         List<String> ingredId = new ArrayList();
         List<Ingredient> theIngredients;
         Statement stmt = null;
@@ -389,7 +389,7 @@ public class DB {
             rs.close();
             stmt.close();
             conn.close();
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (Exception e) {
             throw e;
         } finally {
             if (stmt != null) {
@@ -431,7 +431,7 @@ public class DB {
 
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (Exception e) {
             throw e;
 
         } finally {
@@ -445,7 +445,7 @@ public class DB {
         return theIngredients;
     }
 
-    List<Symptom> gatherSymptoms(String entryId) throws ClassNotFoundException, SQLException {
+    List<Symptom> gatherSymptoms(String entryId) throws Exception {
         List<Symptom> theSymptoms;
         List<String> symptomId = new ArrayList();
         Statement stmt = null;
@@ -468,7 +468,7 @@ public class DB {
             rs.close();
             stmt.close();
             conn.close();
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (Exception e) {
             throw e;
 
         } finally {
@@ -484,7 +484,7 @@ public class DB {
         return theSymptoms;
     }
 
-    List<Symptom> gatherSymptomNames(List<String> symptomId) throws ClassNotFoundException, SQLException {
+    List<Symptom> gatherSymptomNames(List<String> symptomId) throws Exception {
         Symptom temp = null;
         Statement stmt = null;
         Connection conn = null;
@@ -510,7 +510,7 @@ public class DB {
                 conn.close();
 
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (Exception e) {
             throw e;
         } finally {
             if (stmt != null) {
@@ -549,7 +549,7 @@ public class DB {
             conn.close();
             userAdded = true;
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (Exception e) {
 
             throw e;
 
