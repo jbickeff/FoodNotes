@@ -46,7 +46,7 @@ public class loginServelet extends HttpServlet {
             response.sendRedirect("backend.html");
 
         } catch (Exception ex) {
-            response.sendRedirect("/index.html#error");
+            response.sendRedirect("index.html#error");
             //writer.write(ex + "");
         } 
     }
