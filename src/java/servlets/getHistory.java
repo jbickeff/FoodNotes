@@ -8,11 +8,10 @@ package servlets;
 import com.owlike.genson.Genson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javadatabasev0.Entry;
 import javadatabasev0.User;
 import javax.servlet.ServletException;
@@ -42,8 +41,7 @@ public class getHistory extends HttpServlet {
             throws ServletException, IOException {
         try {
             String id = (String) request.getSession().getAttribute("id");
-            if (id == null)
-            {
+            if (id == null) {
                 //response.getWriter().write("failed to have a log in so random test id = 1");
                 //id = "1";
             }
@@ -55,12 +53,13 @@ public class getHistory extends HttpServlet {
             Genson jsonConverter = new Genson();
             String json = jsonConverter.serialize(info);
             response.getWriter().write(json);
-        } 
-        catch (Exception ex) {
+        } catch (Exception ex) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            
-            response.getWriter().write(ex.toString());
-            System.out.println(getHistory.class.getName());
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            ex.printStackTrace(pw);
+            // stack trace as a string
+            response.getWriter().write(sw.toString());
         }
 
     }

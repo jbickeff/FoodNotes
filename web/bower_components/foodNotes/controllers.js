@@ -163,8 +163,9 @@
                 //return $http.get("/bower_components/foodNotes/hist.json");
                 var promise = $http.get("/FoodNotes/api/getHistory");
 
-                promise.error(function() {
+                promise.error(function(data) {
                     error.history = true;
+                    console.log(data);
                 });
                 return promise;
             },

@@ -28,8 +28,7 @@ and open the template in the editor.
                 <div class="over-page" ng-controller="AddingController as adder">
                     <div class="inner-space">
                         <h1>Adding New log</h1>
-                        <button class="btn btn-warn" ng-click="page.mainPage()">Cancel</button>
-                        <button ng-hide="adder.saving" class="btn btn-primary" ng-click="adder.save()">Save</button>
+
 
                         <form role="form">
                             <div class="form-group">
@@ -39,14 +38,13 @@ and open the template in the editor.
 
                             <div class="">
                                 <div ng-repeat="ing in log.ingredients track by $index">
-                                    <div class="little-space form-inline">
-                                        <input ng-model="ing.name" type="text" class="form-control" id="titleInput" placeholder="Enter an Ingredient">
-                                        <button class="btn btn-danger" ng-click="adder.removeIngredient($index)"><i class="glyphicon glyphicon-remove"></i></button>
-                                        <button class="btn btn-default" ng-click=""><i class="glyphicon glyphicon-search"></i></button>
+                                    <div class="row">
+                                        <input ng-model="ing.name" type="text" class="form-control col-sm-10" id="titleInput" placeholder="Enter an Ingredient">
+                                        <div class="btn btn-warn col-sm-1" ng-click="adder.removeIngredient($index)"><i class="glyphicon glyphicon-remove"></i></div>
                                     </div>
 
                                     <div class="list-group" ng-show="ing.name.length > 0 && log.suj.indexOf(ing.name) == - 1">
-                                        <a ng-repeat="suj in log.suj | filter:ing.name" href=""  class="list-group-item" ng-click="$parent.ing.name = suj">
+                                        <a ng-repeat="suj in log.suj| filter:ing.name" href=""  class="list-group-item" ng-click="$parent.ing.name = suj">
                                             {{ suj}}
                                         </a>
                                     </div>
@@ -57,13 +55,13 @@ and open the template in the editor.
                             </div>
 
                             <div class="" ng-repeat="sym in log.symptoms track by $index">
-                                <div class="form-inline">
+                                <div class="">
                                     <input ng-model="sym.name" type="text" class="form-control" id="titleInput" placeholder="Enter a Symptom">
-                                    <button class="btn btn-danger" ng-click="adder.removeSymptom($index)"><i class="glyphicon glyphicon-remove"></i></button>
+                                    <button class="btn btn-warn" ng-click="adder.removeSymptom($index)"><i class="glyphicon glyphicon-remove"></i></button>
                                 </div>
 
                                 <div class="list-group" ng-show="sym.name.length > 0 && log.symSuj.indexOf(sym.name) == - 1">
-                                    <a ng-repeat="suj in log.symSuj | filter:sym.name" href=""  class="list-group-item" ng-click="$parent.sym.name = suj">
+                                    <a ng-repeat="suj in log.symSuj| filter:sym.name" href=""  class="list-group-item" ng-click="$parent.sym.name = suj">
                                         {{ suj}}
                                     </a>
                                 </div>
@@ -73,12 +71,12 @@ and open the template in the editor.
 
                             <button class="little-space btn btn-primary" ng-click="adder.addSymptom()">Add Symptom</button>
 
-                            <div>
-                                <button class="btn btn-primary" ng-hide="adder.saving" ng-click="adder.save()" > Save </button>
+                            <div class="text-right">                        
+                                <button class="btn btn-lg btn-warn" ng-click="page.mainPage()">Cancel</button>
+                                <button class="btn btn-lg btn-primary" ng-hide="adder.saving" ng-click="adder.save()" > Save </button>
                             </div>
                         </form>
 
-{{ log }}
 
                     </div>
                 </div>
@@ -98,7 +96,7 @@ and open the template in the editor.
                     </div>
                     <div class="col-lg-12" ng-controller="ErrorController">
                         <div ng-show="error.history" class="alert alert-danger">
-                            Woops! Looks like there was an error loading your entries!
+                            Woops! Looks like there was an error loading your entries! <button class="btn btn-danger" ng-click="$rootScope.emit('saved')">Retry</button>
                         </div>
                         <br class="clearfix" />
                     </div>
@@ -109,7 +107,7 @@ and open the template in the editor.
                     <div class="col-md-3" ng-repeat="entry in history.getHist()">
                         <div class="panel panel-default fixed-height" >
                             <div class="panel-heading">
-                                <span class="badge"> #{{ entry.entryId }} </span>
+                                <span class="badge"> #{{ entry.entryId}} </span>
                                 <strong>{{ entry.date | date : 'EEEE' }}</strong>
                                 <small>{{ entry.date | date : 'MMM, d y' }}</small>
                                 <a class="btn btn-default btn-sm pull-right" href="#Edit"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -132,7 +130,7 @@ and open the template in the editor.
                                 <strong>Symptoms:</strong>
                                 <ul>
                                     <li ng-repeat="symptom in entry.theSymptoms">
-                                        {{ symptom.name }}
+                                        {{ symptom.name}}
                                     </li>
                                 </ul>
                             </div>
