@@ -13,7 +13,8 @@
     </head>
     <body>
         <h1>First test!</h1>
-        <form method = "Get" action = "BackEnd">
+        <%session.setAttribute("id", "1");%>
+        <form method = "Get" action = "getHistoryTest">
             <input type ="submit">
         </form>
     </body>
