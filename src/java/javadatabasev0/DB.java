@@ -225,6 +225,7 @@ public class DB {
 
                 //if no ingredient is returned then it's not in the list.
                 if (!rs.isBeforeFirst()) {
+
                     rs.next();
                     sql = "INSERT INTO ingredients (NAME) VALUES ('"
                             + ingredient + "')";
@@ -238,11 +239,13 @@ public class DB {
                 rs.next();
                 ingredientIds.add(rs.getString("id"));
 
-                updateIngredientId(ingredientIds, entryId);
                 stmt.close();
                 conn.close();
-                ingredientsAdded = true;
             }
+            
+            ingredientsAdded = true;
+            updateIngredientId(ingredientIds, entryId);
+
         } catch (Exception e) {
             throw e;
 
@@ -266,16 +269,17 @@ public class DB {
             Class.forName("com.mysql.jdbc.Driver");
             String sql;
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            stmt = conn.createStatement();
 
             for (String i : pIds) {
-                //System.out.println("Ingredient id: " + i);
+                stmt = conn.createStatement();
 
+                //System.out.println("Ingredient id: " + i);
                 sql = "INSERT INTO ingredientid (ingredientId, entryId)"
                         + "VALUES (" + i + "," + entryId + ")";
                 stmt.executeUpdate(sql);
+                stmt.close();
+
             }
-            stmt.close();
             conn.close();
 
         } catch (Exception e) {
