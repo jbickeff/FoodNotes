@@ -149,6 +149,7 @@ public class DB {
         PreparedStatement stmt = null;
         Connection conn = null;
         String entryId = "";
+        ResultSet generatedKeys = null;
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -160,22 +161,30 @@ public class DB {
             java.sql.Date theDate = new java.sql.Date(preDate.getTime());
 
             sql = "INSERT INTO entries (date, userId, comments) VALUES (?, ?, ?)";
-            stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setDate(1, theDate);
             stmt.setInt(2, Integer.parseInt(userId));
             stmt.setString(3, pComments);
-            boolean resultSet = stmt.execute();
+            int numberOfRows = stmt.executeUpdate();
             int newId;
 
-            if (resultSet) {
-                ResultSet results = stmt.getResultSet();
-                entryId = "" + results.getInt("ID");
+            if (numberOfRows != 1) {
+                throw new SQLException("Inserting entries effected " + numberOfRows + "when it should have only effected 1");
+            } else {
+                generatedKeys = stmt.getGeneratedKeys();
+                generatedKeys.next();
+                entryId = "" + generatedKeys.getInt(1);
+
                 entryAdded = true;
             }
 
         } catch (Exception e) {
             throw e;
         } finally {
+            if (generatedKeys != null) {
+                generatedKeys.close();
+            }
+
             if (stmt != null) {
                 stmt.close();
             }
@@ -204,10 +213,10 @@ public class DB {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String sql;
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             for (String ingredient : pIngredients) {
                 ingredient = ingredient.toLowerCase();
+                conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
                 sql = "SELECT id, name FROM ingredients WHERE Name=?";
                 stmt = conn.prepareStatement(sql);
@@ -223,10 +232,10 @@ public class DB {
 
                     sql = "SELECT id FROM ingredients WHERE Name='" + ingredient + "'";
                     rs = stmt.executeQuery(sql);
-
                     //ingredientIds.add(rs.getString("id"));
                 }
 
+                rs.next();
                 ingredientIds.add(rs.getString("id"));
 
                 updateIngredientId(ingredientIds, entryId);

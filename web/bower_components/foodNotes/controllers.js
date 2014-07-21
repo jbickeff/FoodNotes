@@ -128,9 +128,9 @@
 
             });
         };
-        
+
         this.update();
-        
+
         var that = this;
 
         $rootScope.$on('saved', function() {
@@ -166,6 +166,9 @@
                 promise.error(function(data) {
                     error.history = true;
                     console.log(data);
+                    if (data.relogin === true) {
+                        window.location.replace("/#relogin");
+                    }
                 });
                 return promise;
             },

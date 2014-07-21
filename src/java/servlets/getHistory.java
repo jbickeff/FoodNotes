@@ -44,15 +44,20 @@ public class getHistory extends HttpServlet {
             if (id == null) {
                 //response.getWriter().write("failed to have a log in so random test id = 1");
                 //id = "1";
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                response.getWriter().write("{\"relogin\":true}");
+
+            } else {
+                Map<String, List<Entry>> info = new HashMap();
+                User me = new User(id);
+                List<Entry> history = me.getTheEntries();
+                System.out.println(history);
+                info.put("history", history);
+                Genson jsonConverter = new Genson();
+                String json = jsonConverter.serialize(info);
+                response.getWriter().write(json);
             }
-            Map<String, List<Entry>> info = new HashMap();
-            User me = new User(id);
-            List<Entry> history = me.getTheEntries();
-            System.out.println(history);
-            info.put("history", history);
-            Genson jsonConverter = new Genson();
-            String json = jsonConverter.serialize(info);
-            response.getWriter().write(json);
+
         } catch (Exception ex) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             StringWriter sw = new StringWriter();
