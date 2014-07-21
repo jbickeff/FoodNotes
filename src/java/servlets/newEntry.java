@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package servlets;
 
 import com.owlike.genson.Genson;
@@ -11,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,8 +33,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "newEntry", urlPatterns = {"/api/newEntry"})
 public class newEntry extends HttpServlet {
 
-  
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -45,42 +43,43 @@ public class newEntry extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {        
+            throws ServletException, IOException {
         Genson jsonConverter = new Genson();
         Map<String, Object> maped;
         maped = jsonConverter.deserialize(new InputStreamReader(request.getInputStream()), Map.class);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
         //response.getWriter().write(maped.toString());
-        List<Map<String, String>>ingMap = (List<Map<String, String>>) maped.get("ingredients");
+        List<Map<String, String>> ingMap = (List<Map<String, String>>) maped.get("ingredients");
         List<String> ing = new ArrayList<String>();
-        for(Map m : ingMap)
-        {
+        for (Map m : ingMap) {
             ing.add((String) m.get("name"));
         }
         ingMap = (List<Map<String, String>>) maped.get("symptoms");
         System.out.println(ing);
         List<String> syp = new ArrayList<String>();
-        for(Map m : ingMap)
-        {
+        for (Map m : ingMap) {
             syp.add((String) m.get("name"));
         }
         String disc = (String) maped.get("desc");
         System.out.println(ingMap);
         String id = (String) request.getSession().getAttribute("id");
-        if (id == null)
-        {
+        if (id == null) {
             id = "1";
         }
         try {
             User me = new User(id);
             String time = dateFormat.format(cal.getTime());
             me.addEntry(ing, syp, time, disc);
-        } 
-        catch (Exception ex) {
-            System.out.println(newEntry.class.getName());
+        } catch (Exception ex) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            ex.printStackTrace(pw);
+            // stack trace as a string
+            response.getWriter().write(sw.toString());
         }
-        
+
     }
 
     /**
