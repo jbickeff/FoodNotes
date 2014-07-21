@@ -36,19 +36,20 @@ public class loginServelet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        
+
         try {
             User user = new User(username, password);
             request.getSession().setAttribute("id", user.getId());
             response.sendRedirect("backend.html");
+            //response.getWriter().write("It worked!");
 
         } catch (Exception ex) {
             response.sendRedirect("index.html#error");
-            //writer.write(ex + "");
-        } 
+            //response.getWriter().write(ex + "");
+        }
     }
 
     /**
