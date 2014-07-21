@@ -12,40 +12,70 @@ and open the template in the editor.
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
         <link rel="stylesheet" href="bower_components/foodNotes/main.css">
+        <script src="bower_components/angular/angular.js"></script>
+        <script>
+            angular.module('frontPage', [])
+                    .controller('messageController', ['$scope', function($scope) {
+                            var mess = window.location.hash.slice(1);
+
+                            switch (mess) {
+                                case "error":
+                                    mess = {
+                                        show: true,
+                                        class: "btn-warning",
+                                        message: "Sorry that password and username doesn't seem to match, please try again!"
+                                    };
+                                    break;
+                                case "relogin":
+                                    mess = {
+                                        show: true,
+                                        class: "btn-info",
+                                        message: "Sorry, you where signed out. Please login again."
+                                    };
+                                    break;
+                            }
+
+                            $scope.mess = mess;
+                        }]);
+        </script>
+
     </head>
     <body role="document">
 
-    <div class="container space">
-       <div class="row">
-          <div class="col-sm-8">
+        <div class="container space">
+            <div class="row">
+                <div class="col-sm-8">
 
-             <div class="jumbotron">
-                <h1>FoodNotes </h1>
-                <p>
-                  Think your alergic to something? Track what you eat with FoodNotes and find out!
-                </p>
-             </div>
-          </div>
-          <div class="col-sm-4">
-             <div class="well">
-                <form action="loginServelet" method="POST">
-                   <div class="form-group">
-                      <label for="username">Username </label>
-                      <input type = "text" class="form-control" id="username" name="username" placeholder="Username">
-                   </div>
-                   <div class="form-group">
-                      <label for="Password">Password</label>
-                      <input type="password" class="form-control" id="Password" name="password" placeholder="Password">
-                   </div>
-                   <p class="text-right">
-                   <a href="/SignUpServelet" class="btn btn-default">Sign up</a>
-                   <input type="submit" class="btn btn-primary" value="Sign In &rarr;">
-                   </p>
+                    <div class="jumbotron">
+                        <h1>FoodNotes </h1>
+                        <p>
+                            Think your alergic to something? Track what you eat with FoodNotes and find out!
+                        </p>
+                    </div>
+                </div>
+                <div ng-app="frontPage" class="col-sm-4">
+                    <div class="well">
+                        <form action="loginServelet" method="POST">
+                            <div ng-controller="messageController" class="form-group">
+                                <div ng-show="mess.show" class="alert" ng-class="mess.class">
+                                    {{ mess.message}}
+                                </div>
+                                <label for="username">Username </label>
+                                <input type = "text" class="form-control" id="username" name="username" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password</label>
+                                <input type="password" class="form-control" id="Password" name="password" placeholder="Password">
+                            </div>
+                            <p class="text-right">
+                                <a href="/SignUpServelet" class="btn btn-default">Sign up</a>
+                                <input type="submit" class="btn btn-primary" value="Sign In &rarr;">
+                            </p>
 
-                </form>
-             </div>
-          </div>
-       </div>
-    </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
