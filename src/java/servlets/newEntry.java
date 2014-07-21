@@ -53,13 +53,17 @@ public class newEntry extends HttpServlet {
         List<Map<String, String>> ingMap = (List<Map<String, String>>) maped.get("ingredients");
         List<String> ing = new ArrayList<String>();
         for (Map m : ingMap) {
-            ing.add((String) m.get("name"));
+            if (m.get("name").equals("") == false) {
+                ing.add((String) m.get("name"));
+            }
         }
         ingMap = (List<Map<String, String>>) maped.get("symptoms");
         System.out.println(ing);
-        List<String> syp = new ArrayList<String>();
+        List<String> syp = new ArrayList<>();
         for (Map m : ingMap) {
-            syp.add((String) m.get("name"));
+            if (m.get("name").equals("") == false) {
+                syp.add((String) m.get("name"));
+            }
         }
         String disc = (String) maped.get("desc");
         System.out.println(ingMap);
