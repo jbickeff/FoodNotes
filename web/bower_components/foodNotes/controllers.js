@@ -161,7 +161,7 @@
         return {
             getHistory: function() {
                 //return $http.get("/bower_components/foodNotes/hist.json");
-                var promise = $http.get("/FoodNotes/api/getHistory");
+                var promise = $http.get("api/getHistory");
 
                 promise.error(function(data) {
                     error.history = true;
@@ -173,11 +173,13 @@
                 //return $http.get("/bower_components/foodNotes/name.json");
                 return $http.get("api/getUsername").error(function() {
                     error.username = true;
+                    window.location.replace("/#relogin");
                 });
             },
             newEntry: function(log) {
-                return $http.post('api/newEntry', log).error(function() {
+                return $http.post('api/newEntry', log).error(function(data) {
                     error.newEntry = true;
+                    console.log(data);
                 });
             },
             updateEntry: function(log) {
