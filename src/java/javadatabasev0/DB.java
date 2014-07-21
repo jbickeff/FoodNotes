@@ -2,6 +2,7 @@ package javadatabasev0;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,7 +29,7 @@ public class DB {
 
             String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
             String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
-            String name = "foodnotes";
+            String name = "tomcat";
 
             //DB_URL = "jdbc:" + System.getenv("OPENSHIFT_MYSQL_DB_URL");
             DB_URL = "jdbc:mysql://" + host + ":" + port + "/" + name;
@@ -145,7 +146,7 @@ public class DB {
         Boolean additionComplete = false;
         Boolean entryAdded = false;
 
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         Connection conn = null;
         String entryId = "";
 
@@ -153,26 +154,24 @@ public class DB {
             Class.forName("com.mysql.jdbc.Driver");
             String sql;
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            stmt = conn.createStatement();
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             java.util.Date preDate = formatter.parse(pDate);
             java.sql.Date theDate = new java.sql.Date(preDate.getTime());
 
-            sql = "INSERT INTO entries (date, userId, comments) VALUES ('"
-                    + theDate + "', " + userId + ", '" + pComments + "')";
+            sql = "INSERT INTO entries (date, userId, comments) VALUES (?, ?, ?)";
+            stmt = conn.prepareStatement(sql);
+            stmt.setDate(1, theDate);
+            stmt.setInt(2, Integer.parseInt(userId));
+            stmt.setString(3, pComments);
+            boolean resultSet = stmt.execute();
+            int newId;
 
-            stmt.executeUpdate(sql);
-
-            sql = "SELECT id FROM entries WHERE date='" + theDate + "'"
-                    + " && comments='" + pComments + "' && userId=" + userId;
-
-            ResultSet rs = stmt.executeQuery(sql);
-            rs.next();
-            entryId = rs.getString("id");
-            stmt.close();
-            conn.close();
-            entryAdded = true;
+            if (resultSet) {
+                ResultSet results = stmt.getResultSet();
+                entryId = "" + results.getInt("ID");
+                entryAdded = true;
+            }
 
         } catch (Exception e) {
             throw e;
@@ -187,8 +186,9 @@ public class DB {
 
         }
 
-        if (addIngredients(pIngredients, entryId)
-                && addSymptoms(pSymptoms, entryId) && entryAdded) {
+        if (entryAdded
+                && addIngredients(pIngredients, entryId)
+                && addSymptoms(pSymptoms, entryId)) {
             additionComplete = true;
         }
 
@@ -197,7 +197,7 @@ public class DB {
 
     Boolean addIngredients(List<String> pIngredients, String entryId) throws Exception {
         Boolean ingredientsAdded = false;
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         Connection conn = null;
         List<String> ingredientIds = new ArrayList();
 
@@ -205,25 +205,25 @@ public class DB {
             Class.forName("com.mysql.jdbc.Driver");
             String sql;
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            stmt = conn.createStatement();
 
             for (String ingredient : pIngredients) {
                 ingredient = ingredient.toLowerCase();
 
-                sql = "SELECT id, name FROM ingredients WHERE Name='"
-                        + ingredient + "'";
-
-                ResultSet rs = stmt.executeQuery(sql);
+                sql = "SELECT id, name FROM ingredients WHERE Name=?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, ingredient);
+                ResultSet rs = stmt.executeQuery();
 
                 //if no ingredient is returned then it's not in the list.
-                if (!rs.next()) {
+                if (!rs.isBeforeFirst()) {
+                    rs.next();
                     sql = "INSERT INTO ingredients (NAME) VALUES ('"
                             + ingredient + "')";
                     stmt.executeUpdate(sql);
 
                     sql = "SELECT id FROM ingredients WHERE Name='" + ingredient + "'";
                     rs = stmt.executeQuery(sql);
-                    rs.next();
+
                     //ingredientIds.add(rs.getString("id"));
                 }
 
@@ -565,8 +565,8 @@ public class DB {
         return userAdded;
     }
 
-    Boolean upDateEntry(List<String> pIngredients, List<String> pSymptoms, 
-             String pComments, int entryId, String userId) throws Exception {
+    Boolean upDateEntry(List<String> pIngredients, List<String> pSymptoms,
+            String pComments, int entryId, String userId) throws Exception {
         Boolean additionComplete = false;
         Boolean entryAdded = false;
 
@@ -578,10 +578,9 @@ public class DB {
             String sql;
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmt = conn.createStatement();
-            sql = "UPDATE entries SET comments ='"+pComments+"' WHERE id = " +entryId;
+            sql = "UPDATE entries SET comments ='" + pComments + "' WHERE id = " + entryId;
 
             stmt.executeUpdate(sql);
-
 
             ResultSet rs = stmt.executeQuery(sql);
             stmt.close();
@@ -600,7 +599,7 @@ public class DB {
             }
 
         }
-        String sEntryId = entryId+"";
+        String sEntryId = entryId + "";
         if (addIngredients(pIngredients, sEntryId)
                 && addSymptoms(pSymptoms, sEntryId) && entryAdded) {
             additionComplete = true;
