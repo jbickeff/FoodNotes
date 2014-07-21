@@ -274,7 +274,7 @@ public class DB {
                 stmt = conn.createStatement();
 
                 //System.out.println("Ingredient id: " + i);
-                sql = "INSERT INTO ingredientid (ingredientId, entryId)"
+                sql = "INSERT INTO ingredientId (ingredientId, entryId)"
                         + "VALUES (" + i + "," + entryId + ")";
                 stmt.executeUpdate(sql);
                 stmt.close();
