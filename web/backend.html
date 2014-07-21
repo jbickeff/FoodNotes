@@ -29,51 +29,57 @@ and open the template in the editor.
                     <div class="inner-space">
                         <h1>Adding New log</h1>
 
+                        <div ng-show="adder.error" class="alert alert-danger"> Woops! Looks like there was an error saving your entry</div>
 
                         <form role="form">
                             <div class="form-group">
-                                <label for="titleInput">Description</label>
+                                <label for="titleInput">Comments</label>
                                 <textarea ng-model="log.desc" class="form-control" rows="3"></textarea>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3>Ingredients</h3>
+                                    <div class="little-space" ng-repeat="ing in log.ingredients track by $index">
+                                        <input ng-model="ing.name"
+                                               ng-keyup="adder.checkIng($index)" type="text" 
+                                               class="form-control" id="titleInput" 
+                                               placeholder="Enter an Ingredient">
 
-                            <div class="">
-                                <div ng-repeat="ing in log.ingredients track by $index">
-                                    <div class="row">
-                                        <input ng-model="ing.name" type="text" class="form-control col-sm-10" id="titleInput" placeholder="Enter an Ingredient">
-                                        <div class="btn btn-warn col-sm-1" ng-click="adder.removeIngredient($index)"><i class="glyphicon glyphicon-remove"></i></div>
+                                        <div class="list-group" ng-show="ing.name.length > 0 && log.suj.indexOf(ing.name) == - 1">
+                                            <a ng-repeat="suj in log.suj| filter:ing.name" href=""  class="list-group-item" ng-click="$parent.ing.name = suj">
+                                                {{ suj}}
+                                            </a>
+                                        </div>
+
                                     </div>
 
-                                    <div class="list-group" ng-show="ing.name.length > 0 && log.suj.indexOf(ing.name) == - 1">
-                                        <a ng-repeat="suj in log.suj| filter:ing.name" href=""  class="list-group-item" ng-click="$parent.ing.name = suj">
-                                            {{ suj}}
-                                        </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <h3>Symptoms</h3>
+                                    <div class="little-space" ng-repeat="sym in log.symptoms track by $index">
+                                        <div class="">
+                                            <input ng-model="sym.name"
+                                                   ng-keyup="adder.checkSym($index)" 
+                                                   type="text"
+                                                   class="form-control" id="titleInput" placeholder="Enter a Symptom">
+                                        </div>
+
+                                        <div class="list-group" ng-show="sym.name.length > 0 && log.symSuj.indexOf(sym.name) == - 1">
+                                            <a ng-repeat="suj in log.symSuj| filter:sym.name" href=""  class="list-group-item" ng-click="$parent.sym.name = suj">
+                                                {{ suj}}
+                                            </a>
+                                        </div>
+
+
                                     </div>
-
                                 </div>
-
-                                <button class="little-space btn btn-primary" ng-click="adder.addIngredient()">Add Ingredient</button>
-                            </div>
-
-                            <div class="" ng-repeat="sym in log.symptoms track by $index">
-                                <div class="">
-                                    <input ng-model="sym.name" type="text" class="form-control" id="titleInput" placeholder="Enter a Symptom">
-                                    <button class="btn btn-warn" ng-click="adder.removeSymptom($index)"><i class="glyphicon glyphicon-remove"></i></button>
-                                </div>
-
-                                <div class="list-group" ng-show="sym.name.length > 0 && log.symSuj.indexOf(sym.name) == - 1">
-                                    <a ng-repeat="suj in log.symSuj| filter:sym.name" href=""  class="list-group-item" ng-click="$parent.sym.name = suj">
-                                        {{ suj}}
-                                    </a>
-                                </div>
-
 
                             </div>
-
-                            <button class="little-space btn btn-primary" ng-click="adder.addSymptom()">Add Symptom</button>
-
+                            <br class="clearfix"/>
                             <div class="text-right">                        
                                 <button class="btn btn-lg btn-warn" ng-click="page.mainPage()">Cancel</button>
                                 <button class="btn btn-lg btn-primary" ng-hide="adder.saving" ng-click="adder.save()" > Save </button>
+                                <button class="btn btn-lg btn-default" ng-show="adder.saving" ng-click="" > Saving... </button>
                             </div>
                         </form>
 
@@ -115,7 +121,6 @@ and open the template in the editor.
                             </div>
                             <div class="panel-body">
 
-                                <blockquote>{{ entry.comments}}</blockquote>
                                 <div>
 
 
@@ -133,6 +138,9 @@ and open the template in the editor.
                                         {{ symptom.name}}
                                     </li>
                                 </ul>
+                                <strong>Comments:</strong>
+                                <blockquote>{{ entry.comments}}</blockquote>
+
                             </div>
                         </div>
                     </div>                

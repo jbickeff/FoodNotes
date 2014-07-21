@@ -39,9 +39,9 @@
     fc.controller('AddingController', function($rootScope, $scope, foodAPI) {
 
         this.saving = false;
+        this.error = false;
 
         $scope.log = {
-            title: 'Snack',
             desc: '',
             ingredients: [
                 {name: ''}
@@ -62,7 +62,8 @@
                 'swelling',
                 'hyperactivity'
             ]
-        }
+        };
+
 
         // ingredient stuff
         this.addIngredient = function() {
@@ -86,13 +87,60 @@
             $scope.log.symptoms.splice(index, 1);
         };
 
+        this.checkIng = function(index) {
+            var arr = $scope.log.ingredients;
+            console.log(index, arr[index]);
+            if (arr[index].name === "") {
+                // checks if the next is blank
+                if (index + 1 < arr.length && arr[index + 1].name === "") {
+                    this.removeIngredient(index + 1);
+                }
+            } else {
+                if (index + 1 === arr.length) {
+                    this.addIngredient();
+                }
+            }
+        };
+
+        this.checkSym = function(index) {
+            var arr = $scope.log.symptoms;
+            console.log(index, arr[index]);
+            if (arr[index].name === "") {
+                // checks if the next is blank
+                if (index + 1 < arr.length && arr[index + 1].name === "") {
+                    this.removeSymptom(index + 1);
+                }
+            } else {
+                if (index + 1 === arr.length) {
+                    this.addSymptom();
+                }
+            }
+        };
+
+
+
         this.save = function() {
             this.saving = true;
+            this.error = false;
+
             var that = this;
             var promise = foodAPI.newEntry($scope.log);
             promise.success(function() {
                 that.saving = false;
                 $rootScope.$emit('saved', $scope.log);
+                $scope.desc = "";
+                $scope.log.ingredients = [
+                    {name: ''}
+                ];
+                $scope.log.symptoms = [
+                    {name: ''}
+                ];
+
+            });
+
+            promise.error(function() {
+                this.saving = false;
+                this.error = true;
             });
         };
     });
