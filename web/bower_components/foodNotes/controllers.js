@@ -210,13 +210,17 @@
             getHistory: function() {
                 //return $http.get("/bower_components/foodNotes/hist.json");
                 var promise = $http.get("api/getHistory");
-
+                error.loading = true;
                 promise.error(function(data) {
                     error.history = true;
+                    error.loading = false;
                     console.log(data);
                     if (data.relogin === true) {
                         window.location.replace("/#relogin");
                     }
+                });
+                promise.success(function () {
+                    error.loading = false;
                 });
                 return promise;
             },
@@ -252,6 +256,7 @@
 
     fc.factory('error', function() {
         return {
+            loading : false,
             history: false,
             username: false,
             newEntry: false,

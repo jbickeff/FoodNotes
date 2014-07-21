@@ -100,9 +100,14 @@ and open the template in the editor.
                             New Log
                         </button>
                     </div>
+
+                    <!-- ERRORS -->
                     <div class="col-lg-12" ng-controller="ErrorController">
                         <div ng-show="error.history" class="alert alert-danger">
                             Woops! Looks like there was an error loading your entries! <button class="btn btn-danger" ng-click="$rootScope.emit('saved')">Retry</button>
+                        </div>
+                        <div ng-show="error.loading" class="alert alert-info text-center">
+                            Loading History ...
                         </div>
                         <br class="clearfix" />
                     </div>
